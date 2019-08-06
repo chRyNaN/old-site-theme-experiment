@@ -1,0 +1,85 @@
+apply plugin: 'kotlin2js'
+
+group 'com.chrynan'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js"
+
+    compile project(":common")
+
+    compile "org.jetbrains.kotlinx:kotlinx-html-js:0.6.12"
+
+    compile "io.ktor:ktor-client-js:1.2.1"
+
+    compile "io.ktor:ktor-client-json-js:1.2.1"
+
+    compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.11.0"
+}
+
+task assembleWeb(type: Sync) {
+    def scriptList = []
+    configurations.compile.each { File file ->
+        from(zipTree(file.absolutePath), {
+            includeEmptyDirs = false
+            include { fileTreeElement ->
+                def path = fileTreeElement.path
+                def includeFile = path.endsWith(".js")
+
+                if (includeFile && !path.endsWith(".meta.js")) {
+                    scriptList << "<script defer type=\"text/javascript\" src=\"../js/${path.substring(path.lastIndexOf("/") + 1)}\"></script>"
+                }
+
+                includeFile
+            }
+        })
+    }
+    from compileKotlin2Js.destinationDir
+    into "${rootProject.projectDir}/Theme/chRyNaN.codes/1.0.0/js" // TODO this should be updated to not be static values
+
+    doLast {
+        def html = """
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <title>chRyNaN Codes</title>
+            
+                <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+                <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+                <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+                
+                <script defer type="text/javascript" src="../js/kotlin.js"></script>
+                <script defer type="text/javascript" src="../js/kotlinx-io.js"></script>
+                <script defer type="text/javascript" src="../js/kotlinx-coroutines-core.js"></script>
+                <script defer type="text/javascript" src="../js/kotlinx-coroutines-io.js"></script>
+                <script defer type="text/javascript" src="../js/kotlinx-html-js.js"></script>
+                <script defer type="text/javascript" src="../js/kotlinx-serialization-runtime-js.js"></script>
+                <script defer type="text/javascript" src="../js/ktor-utils.js"></script>
+                <script defer type="text/javascript" src="../js/ktor-http.js"></script>
+                <script defer type="text/javascript" src="../js/ktor-http-cio.js"></script>
+                <script defer type="text/javascript" src="../js/ktor-client-core.js"></script>
+                <script defer type="text/javascript" src="../js/ktor-client-js.js"></script>
+                <script defer type="text/javascript" src="../js/ktor-client-json.js"></script>
+                <script defer type="text/javascript" src="../js/kotlinx-atomicfu.js"></script>
+                <script defer type="text/javascript" src="../js/common.js"></script>
+                <script defer type="text/javascript" src="../js/client.js"></script>
+                             
+                <script defer type="text/javascript" src="../js/client.js"></script>
+            </head>
+            <body>
+            </body>
+            </html>
+            """.stripIndent()
+        new File("${rootProject.projectDir}/Theme/chRyNaN.codes/1.0.0/js/test.html").text = html
+    }
+
+    dependsOn classes
+}
+
+assemble.dependsOn assembleWeb
