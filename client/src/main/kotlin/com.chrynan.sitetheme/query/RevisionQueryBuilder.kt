@@ -1,6 +1,7 @@
 package com.chrynan.sitetheme.query
 
 import com.chrynan.graphqlquerybuilder.GraphQLQueryBuilder
+import com.chrynan.sitetheme.model.PostObjectFieldFormat
 
 class RevisionQueryBuilder : GraphQLQueryBuilder() {
 
@@ -33,4 +34,22 @@ class RevisionQueryBuilder : GraphQLQueryBuilder() {
 
     fun editLast(builder: UserQueryBuilder.() -> Unit) =
         gqlObject(name = "editLast", objectBuilder = UserQueryBuilder(), objectFieldBuilder = builder)
+
+    fun content(format: PostObjectFieldFormat = PostObjectFieldFormat.RAW) =
+        gqlScalarWithParams(
+            name = "content",
+            parameters = listOf(gqlParam(name = "format", value = format))
+        )
+
+    fun excerpt(format: PostObjectFieldFormat = PostObjectFieldFormat.RAW) =
+        gqlScalarWithParams(
+            name = "excerpt",
+            parameters = listOf(gqlParam(name = "format", value = format))
+        )
+
+    fun title(format: PostObjectFieldFormat = PostObjectFieldFormat.RAW) =
+        gqlScalarWithParams(
+            name = "title",
+            parameters = listOf(gqlParam(name = "format", value = format))
+        )
 }
