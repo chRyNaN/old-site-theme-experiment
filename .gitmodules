@@ -1,0 +1,3 @@
+[submodule "graphql-query"]
+	path = graphql-query
+	url = git@github.com:chRyNaN/graphql-query-builder.git

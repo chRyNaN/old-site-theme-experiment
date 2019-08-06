@@ -77,6 +77,40 @@ var common = function (_, Kotlin) {
     simpleName: 'SiteTheme',
     interfaces: []
   };
+  function Avatar(default_0, extraAttr, forceDefault, foundAvatar, height, width, rating, url, size) {
+    if (default_0 === void 0)
+      default_0 = null;
+    if (extraAttr === void 0)
+      extraAttr = null;
+    if (forceDefault === void 0)
+      forceDefault = null;
+    if (foundAvatar === void 0)
+      foundAvatar = null;
+    if (height === void 0)
+      height = null;
+    if (width === void 0)
+      width = null;
+    if (rating === void 0)
+      rating = null;
+    if (url === void 0)
+      url = null;
+    if (size === void 0)
+      size = null;
+    this.default = default_0;
+    this.extraAttr = extraAttr;
+    this.forceDefault = forceDefault;
+    this.foundAvatar = foundAvatar;
+    this.height = height;
+    this.width = width;
+    this.rating = rating;
+    this.url = url;
+    this.size = size;
+  }
+  Avatar.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Avatar',
+    interfaces: []
+  };
   function Category(id, categoryId, count, description, link, name, slug, termGroupId) {
     if (categoryId === void 0)
       categoryId = null;
@@ -848,7 +882,7 @@ var common = function (_, Kotlin) {
   PageToRevisionConnectionEdge.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.cursor, other.cursor) && Kotlin.equals(this.node, other.node)))));
   };
-  function Post(id, author, commentCount, commentStatus, date, desiredSlug, editLast, enclosure, featuredImage, guid, link, modified, postId, slug, status, uri, excerpt, content, categories, tags, revisions, comments) {
+  function Post(id, author, commentCount, commentStatus, date, desiredSlug, editLast, enclosure, featuredImage, guid, link, modified, postId, slug, status, uri, excerpt, content, title, categories, tags, revisions, comments) {
     if (author === void 0)
       author = null;
     if (commentCount === void 0)
@@ -881,6 +915,8 @@ var common = function (_, Kotlin) {
       excerpt = null;
     if (content === void 0)
       content = null;
+    if (title === void 0)
+      title = null;
     if (categories === void 0)
       categories = null;
     if (tags === void 0)
@@ -907,6 +943,7 @@ var common = function (_, Kotlin) {
     this.uri = uri;
     this.excerpt = excerpt;
     this.content = content;
+    this.title = title;
     this.categories = categories;
     this.tags = tags;
     this.revisions = revisions;
@@ -977,22 +1014,25 @@ var common = function (_, Kotlin) {
     return this.content;
   };
   Post.prototype.component19 = function () {
-    return this.categories;
+    return this.title;
   };
   Post.prototype.component20 = function () {
-    return this.tags;
+    return this.categories;
   };
   Post.prototype.component21 = function () {
-    return this.revisions;
+    return this.tags;
   };
   Post.prototype.component22 = function () {
+    return this.revisions;
+  };
+  Post.prototype.component23 = function () {
     return this.comments;
   };
-  Post.prototype.copy_otac6e$ = function (id, author, commentCount, commentStatus, date, desiredSlug, editLast, enclosure, featuredImage, guid, link, modified, postId, slug, status, uri, excerpt, content, categories, tags, revisions, comments) {
-    return new Post(id === void 0 ? this.id : id, author === void 0 ? this.author : author, commentCount === void 0 ? this.commentCount : commentCount, commentStatus === void 0 ? this.commentStatus : commentStatus, date === void 0 ? this.date : date, desiredSlug === void 0 ? this.desiredSlug : desiredSlug, editLast === void 0 ? this.editLast : editLast, enclosure === void 0 ? this.enclosure : enclosure, featuredImage === void 0 ? this.featuredImage : featuredImage, guid === void 0 ? this.guid : guid, link === void 0 ? this.link : link, modified === void 0 ? this.modified : modified, postId === void 0 ? this.postId : postId, slug === void 0 ? this.slug : slug, status === void 0 ? this.status : status, uri === void 0 ? this.uri : uri, excerpt === void 0 ? this.excerpt : excerpt, content === void 0 ? this.content : content, categories === void 0 ? this.categories : categories, tags === void 0 ? this.tags : tags, revisions === void 0 ? this.revisions : revisions, comments === void 0 ? this.comments : comments);
+  Post.prototype.copy_pyvidl$ = function (id, author, commentCount, commentStatus, date, desiredSlug, editLast, enclosure, featuredImage, guid, link, modified, postId, slug, status, uri, excerpt, content, title, categories, tags, revisions, comments) {
+    return new Post(id === void 0 ? this.id : id, author === void 0 ? this.author : author, commentCount === void 0 ? this.commentCount : commentCount, commentStatus === void 0 ? this.commentStatus : commentStatus, date === void 0 ? this.date : date, desiredSlug === void 0 ? this.desiredSlug : desiredSlug, editLast === void 0 ? this.editLast : editLast, enclosure === void 0 ? this.enclosure : enclosure, featuredImage === void 0 ? this.featuredImage : featuredImage, guid === void 0 ? this.guid : guid, link === void 0 ? this.link : link, modified === void 0 ? this.modified : modified, postId === void 0 ? this.postId : postId, slug === void 0 ? this.slug : slug, status === void 0 ? this.status : status, uri === void 0 ? this.uri : uri, excerpt === void 0 ? this.excerpt : excerpt, content === void 0 ? this.content : content, title === void 0 ? this.title : title, categories === void 0 ? this.categories : categories, tags === void 0 ? this.tags : tags, revisions === void 0 ? this.revisions : revisions, comments === void 0 ? this.comments : comments);
   };
   Post.prototype.toString = function () {
-    return 'Post(id=' + Kotlin.toString(this.id) + (', author=' + Kotlin.toString(this.author)) + (', commentCount=' + Kotlin.toString(this.commentCount)) + (', commentStatus=' + Kotlin.toString(this.commentStatus)) + (', date=' + Kotlin.toString(this.date)) + (', desiredSlug=' + Kotlin.toString(this.desiredSlug)) + (', editLast=' + Kotlin.toString(this.editLast)) + (', enclosure=' + Kotlin.toString(this.enclosure)) + (', featuredImage=' + Kotlin.toString(this.featuredImage)) + (', guid=' + Kotlin.toString(this.guid)) + (', link=' + Kotlin.toString(this.link)) + (', modified=' + Kotlin.toString(this.modified)) + (', postId=' + Kotlin.toString(this.postId)) + (', slug=' + Kotlin.toString(this.slug)) + (', status=' + Kotlin.toString(this.status)) + (', uri=' + Kotlin.toString(this.uri)) + (', excerpt=' + Kotlin.toString(this.excerpt)) + (', content=' + Kotlin.toString(this.content)) + (', categories=' + Kotlin.toString(this.categories)) + (', tags=' + Kotlin.toString(this.tags)) + (', revisions=' + Kotlin.toString(this.revisions)) + (', comments=' + Kotlin.toString(this.comments)) + ')';
+    return 'Post(id=' + Kotlin.toString(this.id) + (', author=' + Kotlin.toString(this.author)) + (', commentCount=' + Kotlin.toString(this.commentCount)) + (', commentStatus=' + Kotlin.toString(this.commentStatus)) + (', date=' + Kotlin.toString(this.date)) + (', desiredSlug=' + Kotlin.toString(this.desiredSlug)) + (', editLast=' + Kotlin.toString(this.editLast)) + (', enclosure=' + Kotlin.toString(this.enclosure)) + (', featuredImage=' + Kotlin.toString(this.featuredImage)) + (', guid=' + Kotlin.toString(this.guid)) + (', link=' + Kotlin.toString(this.link)) + (', modified=' + Kotlin.toString(this.modified)) + (', postId=' + Kotlin.toString(this.postId)) + (', slug=' + Kotlin.toString(this.slug)) + (', status=' + Kotlin.toString(this.status)) + (', uri=' + Kotlin.toString(this.uri)) + (', excerpt=' + Kotlin.toString(this.excerpt)) + (', content=' + Kotlin.toString(this.content)) + (', title=' + Kotlin.toString(this.title)) + (', categories=' + Kotlin.toString(this.categories)) + (', tags=' + Kotlin.toString(this.tags)) + (', revisions=' + Kotlin.toString(this.revisions)) + (', comments=' + Kotlin.toString(this.comments)) + ')';
   };
   Post.prototype.hashCode = function () {
     var result = 0;
@@ -1014,6 +1054,7 @@ var common = function (_, Kotlin) {
     result = result * 31 + Kotlin.hashCode(this.uri) | 0;
     result = result * 31 + Kotlin.hashCode(this.excerpt) | 0;
     result = result * 31 + Kotlin.hashCode(this.content) | 0;
+    result = result * 31 + Kotlin.hashCode(this.title) | 0;
     result = result * 31 + Kotlin.hashCode(this.categories) | 0;
     result = result * 31 + Kotlin.hashCode(this.tags) | 0;
     result = result * 31 + Kotlin.hashCode(this.revisions) | 0;
@@ -1021,7 +1062,7 @@ var common = function (_, Kotlin) {
     return result;
   };
   Post.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.id, other.id) && Kotlin.equals(this.author, other.author) && Kotlin.equals(this.commentCount, other.commentCount) && Kotlin.equals(this.commentStatus, other.commentStatus) && Kotlin.equals(this.date, other.date) && Kotlin.equals(this.desiredSlug, other.desiredSlug) && Kotlin.equals(this.editLast, other.editLast) && Kotlin.equals(this.enclosure, other.enclosure) && Kotlin.equals(this.featuredImage, other.featuredImage) && Kotlin.equals(this.guid, other.guid) && Kotlin.equals(this.link, other.link) && Kotlin.equals(this.modified, other.modified) && Kotlin.equals(this.postId, other.postId) && Kotlin.equals(this.slug, other.slug) && Kotlin.equals(this.status, other.status) && Kotlin.equals(this.uri, other.uri) && Kotlin.equals(this.excerpt, other.excerpt) && Kotlin.equals(this.content, other.content) && Kotlin.equals(this.categories, other.categories) && Kotlin.equals(this.tags, other.tags) && Kotlin.equals(this.revisions, other.revisions) && Kotlin.equals(this.comments, other.comments)))));
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.id, other.id) && Kotlin.equals(this.author, other.author) && Kotlin.equals(this.commentCount, other.commentCount) && Kotlin.equals(this.commentStatus, other.commentStatus) && Kotlin.equals(this.date, other.date) && Kotlin.equals(this.desiredSlug, other.desiredSlug) && Kotlin.equals(this.editLast, other.editLast) && Kotlin.equals(this.enclosure, other.enclosure) && Kotlin.equals(this.featuredImage, other.featuredImage) && Kotlin.equals(this.guid, other.guid) && Kotlin.equals(this.link, other.link) && Kotlin.equals(this.modified, other.modified) && Kotlin.equals(this.postId, other.postId) && Kotlin.equals(this.slug, other.slug) && Kotlin.equals(this.status, other.status) && Kotlin.equals(this.uri, other.uri) && Kotlin.equals(this.excerpt, other.excerpt) && Kotlin.equals(this.content, other.content) && Kotlin.equals(this.title, other.title) && Kotlin.equals(this.categories, other.categories) && Kotlin.equals(this.tags, other.tags) && Kotlin.equals(this.revisions, other.revisions) && Kotlin.equals(this.comments, other.comments)))));
   };
   function PostObjectFieldFormat(name, ordinal) {
     Enum.call(this);
@@ -2020,7 +2061,7 @@ var common = function (_, Kotlin) {
   Tag.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.id, other.id) && Kotlin.equals(this.count, other.count) && Kotlin.equals(this.description, other.description) && Kotlin.equals(this.link, other.link) && Kotlin.equals(this.name, other.name) && Kotlin.equals(this.slug, other.slug) && Kotlin.equals(this.tagId, other.tagId) && Kotlin.equals(this.termGroupId, other.termGroupId)))));
   };
-  function User(id, description, email, firstName, lastName, locale, name, nicename, nickname, registeredDate, slug, url, userId, username) {
+  function User(id, description, email, firstName, lastName, locale, name, nicename, nickname, registeredDate, slug, url, userId, username, avatar) {
     if (description === void 0)
       description = null;
     if (email === void 0)
@@ -2047,6 +2088,8 @@ var common = function (_, Kotlin) {
       userId = null;
     if (username === void 0)
       username = null;
+    if (avatar === void 0)
+      avatar = null;
     this.id_10bjh5$_0 = id;
     this.description = description;
     this.email = email;
@@ -2061,6 +2104,7 @@ var common = function (_, Kotlin) {
     this.url = url;
     this.userId = userId;
     this.username = username;
+    this.avatar = avatar;
   }
   Object.defineProperty(User.prototype, 'id', {
     get: function () {
@@ -2114,11 +2158,14 @@ var common = function (_, Kotlin) {
   User.prototype.component14 = function () {
     return this.username;
   };
-  User.prototype.copy_b3uuc3$ = function (id, description, email, firstName, lastName, locale, name, nicename, nickname, registeredDate, slug, url, userId, username) {
-    return new User(id === void 0 ? this.id : id, description === void 0 ? this.description : description, email === void 0 ? this.email : email, firstName === void 0 ? this.firstName : firstName, lastName === void 0 ? this.lastName : lastName, locale === void 0 ? this.locale : locale, name === void 0 ? this.name : name, nicename === void 0 ? this.nicename : nicename, nickname === void 0 ? this.nickname : nickname, registeredDate === void 0 ? this.registeredDate : registeredDate, slug === void 0 ? this.slug : slug, url === void 0 ? this.url : url, userId === void 0 ? this.userId : userId, username === void 0 ? this.username : username);
+  User.prototype.component15 = function () {
+    return this.avatar;
+  };
+  User.prototype.copy_9agod2$ = function (id, description, email, firstName, lastName, locale, name, nicename, nickname, registeredDate, slug, url, userId, username, avatar) {
+    return new User(id === void 0 ? this.id : id, description === void 0 ? this.description : description, email === void 0 ? this.email : email, firstName === void 0 ? this.firstName : firstName, lastName === void 0 ? this.lastName : lastName, locale === void 0 ? this.locale : locale, name === void 0 ? this.name : name, nicename === void 0 ? this.nicename : nicename, nickname === void 0 ? this.nickname : nickname, registeredDate === void 0 ? this.registeredDate : registeredDate, slug === void 0 ? this.slug : slug, url === void 0 ? this.url : url, userId === void 0 ? this.userId : userId, username === void 0 ? this.username : username, avatar === void 0 ? this.avatar : avatar);
   };
   User.prototype.toString = function () {
-    return 'User(id=' + Kotlin.toString(this.id) + (', description=' + Kotlin.toString(this.description)) + (', email=' + Kotlin.toString(this.email)) + (', firstName=' + Kotlin.toString(this.firstName)) + (', lastName=' + Kotlin.toString(this.lastName)) + (', locale=' + Kotlin.toString(this.locale)) + (', name=' + Kotlin.toString(this.name)) + (', nicename=' + Kotlin.toString(this.nicename)) + (', nickname=' + Kotlin.toString(this.nickname)) + (', registeredDate=' + Kotlin.toString(this.registeredDate)) + (', slug=' + Kotlin.toString(this.slug)) + (', url=' + Kotlin.toString(this.url)) + (', userId=' + Kotlin.toString(this.userId)) + (', username=' + Kotlin.toString(this.username)) + ')';
+    return 'User(id=' + Kotlin.toString(this.id) + (', description=' + Kotlin.toString(this.description)) + (', email=' + Kotlin.toString(this.email)) + (', firstName=' + Kotlin.toString(this.firstName)) + (', lastName=' + Kotlin.toString(this.lastName)) + (', locale=' + Kotlin.toString(this.locale)) + (', name=' + Kotlin.toString(this.name)) + (', nicename=' + Kotlin.toString(this.nicename)) + (', nickname=' + Kotlin.toString(this.nickname)) + (', registeredDate=' + Kotlin.toString(this.registeredDate)) + (', slug=' + Kotlin.toString(this.slug)) + (', url=' + Kotlin.toString(this.url)) + (', userId=' + Kotlin.toString(this.userId)) + (', username=' + Kotlin.toString(this.username)) + (', avatar=' + Kotlin.toString(this.avatar)) + ')';
   };
   User.prototype.hashCode = function () {
     var result = 0;
@@ -2136,10 +2183,11 @@ var common = function (_, Kotlin) {
     result = result * 31 + Kotlin.hashCode(this.url) | 0;
     result = result * 31 + Kotlin.hashCode(this.userId) | 0;
     result = result * 31 + Kotlin.hashCode(this.username) | 0;
+    result = result * 31 + Kotlin.hashCode(this.avatar) | 0;
     return result;
   };
   User.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.id, other.id) && Kotlin.equals(this.description, other.description) && Kotlin.equals(this.email, other.email) && Kotlin.equals(this.firstName, other.firstName) && Kotlin.equals(this.lastName, other.lastName) && Kotlin.equals(this.locale, other.locale) && Kotlin.equals(this.name, other.name) && Kotlin.equals(this.nicename, other.nicename) && Kotlin.equals(this.nickname, other.nickname) && Kotlin.equals(this.registeredDate, other.registeredDate) && Kotlin.equals(this.slug, other.slug) && Kotlin.equals(this.url, other.url) && Kotlin.equals(this.userId, other.userId) && Kotlin.equals(this.username, other.username)))));
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.id, other.id) && Kotlin.equals(this.description, other.description) && Kotlin.equals(this.email, other.email) && Kotlin.equals(this.firstName, other.firstName) && Kotlin.equals(this.lastName, other.lastName) && Kotlin.equals(this.locale, other.locale) && Kotlin.equals(this.name, other.name) && Kotlin.equals(this.nicename, other.nicename) && Kotlin.equals(this.nickname, other.nickname) && Kotlin.equals(this.registeredDate, other.registeredDate) && Kotlin.equals(this.slug, other.slug) && Kotlin.equals(this.url, other.url) && Kotlin.equals(this.userId, other.userId) && Kotlin.equals(this.username, other.username) && Kotlin.equals(this.avatar, other.avatar)))));
   };
   function WPPageInfo(endCursor, hasNextPage, hasPreviousPage, startCursor) {
     if (endCursor === void 0)
@@ -2194,6 +2242,7 @@ var common = function (_, Kotlin) {
   package$sitetheme.ChrynanCodesTheme = ChrynanCodesTheme;
   package$sitetheme.SiteTheme = SiteTheme;
   var package$model = package$sitetheme.model || (package$sitetheme.model = {});
+  package$model.Avatar = Avatar;
   package$model.Category = Category;
   package$model.Comment = Comment;
   package$model.Connection = Connection;

@@ -12,6 +12,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-js"
 
     compile project(":common")
+    compile project(":graphql-query")
 
     compile "org.jetbrains.kotlinx:kotlinx-html-js:0.6.12"
 
@@ -67,6 +68,7 @@ task assembleWeb(type: Sync) {
                 <script defer type="text/javascript" src="../js/ktor-client-js.js"></script>
                 <script defer type="text/javascript" src="../js/ktor-client-json.js"></script>
                 <script defer type="text/javascript" src="../js/kotlinx-atomicfu.js"></script>
+                <script defer type="text/javascript" src="../js/graphql-query.js"></script>
                 <script defer type="text/javascript" src="../js/common.js"></script>
                 <script defer type="text/javascript" src="../js/client.js"></script>
                              

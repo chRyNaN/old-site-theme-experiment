@@ -12,9 +12,9 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   var Unit = Kotlin.kotlin.Unit;
   var get_create = $module$kotlinx_html_js.kotlinx.html.dom.get_create_4wc2mh$;
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
+  var Kind_CLASS = Kotlin.Kind.CLASS;
   var append = $module$kotlinx_html_js.kotlinx.html.dom.append_k9bwru$;
   var lazy = Kotlin.kotlin.lazy_klfg04$;
-  var Kind_CLASS = Kotlin.Kind.CLASS;
   var set_id = $module$kotlinx_html_js.kotlinx.html.set_id_ueiko3$;
   var div = $module$kotlinx_html_js.kotlinx.html.div_ri36nr$;
   var setOf = Kotlin.kotlin.collections.setOf_i5x0yv$;
@@ -96,6 +96,24 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
     kind: Kind_INTERFACE,
     simpleName: 'NotFoundBinder',
     interfaces: [HeaderFooterBinder]
+  };
+  function Mapper() {
+  }
+  Mapper.$metadata$ = {
+    kind: Kind_INTERFACE,
+    simpleName: 'Mapper',
+    interfaces: []
+  };
+  function PostItemMapper() {
+  }
+  PostItemMapper.prototype.map_11rb$ = function (model) {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3, tmp$_4, tmp$_5, tmp$_6, tmp$_7, tmp$_8, tmp$_9;
+    return new PostItemViewModel((tmp$ = model.title) != null ? tmp$ : '', null, (tmp$_2 = (tmp$_1 = model.excerpt) != null ? tmp$_1 : (tmp$_0 = model.content) != null ? tmp$_0.substring(0, 250) : null) != null ? tmp$_2 : '', model.featuredImage, (tmp$_3 = model.date) != null ? tmp$_3 : '', (tmp$_5 = (tmp$_4 = model.author) != null ? tmp$_4.nicename : null) != null ? tmp$_5 : '', (tmp$_8 = (tmp$_7 = (tmp$_6 = model.author) != null ? tmp$_6.avatar : null) != null ? tmp$_7.url : null) != null ? tmp$_8 : '', (tmp$_9 = model.link) != null ? tmp$_9 : '', 'Read More');
+  };
+  PostItemMapper.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'PostItemMapper',
+    interfaces: [Mapper]
   };
   function HeaderFooterPage() {
     Page.call(this);
@@ -1205,6 +1223,9 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   package$binder.HeaderFooterBinder = HeaderFooterBinder;
   package$binder.HomeBinder = HomeBinder;
   package$binder.NotFoundBinder = NotFoundBinder;
+  var package$mapper = package$sitetheme.mapper || (package$sitetheme.mapper = {});
+  package$mapper.Mapper = Mapper;
+  package$mapper.PostItemMapper = PostItemMapper;
   var package$page = package$sitetheme.page || (package$sitetheme.page = {});
   package$page.HeaderFooterPage = HeaderFooterPage;
   package$page.HomePage = HomePage;
