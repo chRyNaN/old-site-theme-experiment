@@ -1,6 +1,8 @@
 package com.chrynan.sitetheme.query
 
 import com.chrynan.graphqlquerybuilder.GraphQLQueryBuilder
+import com.chrynan.graphqlquerybuilder.fragment
+import com.chrynan.graphqlquerybuilder.rangeTo
 
 class CategoryQueryBuilder : GraphQLQueryBuilder() {
 
@@ -57,4 +59,57 @@ class CategoryQueryBuilder : GraphQLQueryBuilder() {
             objectBuilder = PostConnectionQueryBuilder(),
             objectFieldBuilder = builder
         )
+}
+
+val categoryListItemFragment = fragment<CategoryQueryBuilder>() on {
+    id
+    categoryId
+    link
+    name
+    description
+}
+
+val revisionListItemFragment = fragment<RevisionQueryBuilder>() on {
+    id
+    revisionId
+    link
+    uri
+    date
+    title()
+    excerpt()
+}
+
+val tagListItemFragment = fragment<TagQueryBuilder>() on {
+    id
+    tagId
+    link
+    name
+    description
+}
+
+fun test(post: PostQueryBuilder) {
+    post.apply {
+        id
+        commentCount
+        date
+        link
+        uri
+        title()
+        excerpt()
+        tags {
+            nodes {
+                this..tagListItemFragment
+            }
+        }
+        revisions {
+            nodes {
+                this..revisionListItemFragment
+            }
+        }
+        categories {
+            nodes {
+                this..categoryListItemFragment
+            }
+        }
+    }
 }

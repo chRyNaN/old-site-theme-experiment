@@ -1,10 +1,6 @@
 package com.chrynan.sitetheme.model
 
-interface Connection<N : Node, E : Edge<N>> {
+interface Connection {
 
-    val edges: List<E>
-
-    val nodes: List<N>
-
-    val pageInfo: WPPageInfo?
+    val pageInfo: WPPageInfo
 }

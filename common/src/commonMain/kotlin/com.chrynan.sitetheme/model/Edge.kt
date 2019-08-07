@@ -1,8 +1,8 @@
 package com.chrynan.sitetheme.model
 
-interface Edge<N : Node> {
+interface Edge<T> {
 
-    val cursor: String?
+    val cursor: Cursor
 
-    val node: N
+    val node: T
 }
