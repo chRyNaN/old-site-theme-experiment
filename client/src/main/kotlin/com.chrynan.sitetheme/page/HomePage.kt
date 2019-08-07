@@ -4,7 +4,7 @@ import com.chrynan.sitetheme.binder.HomeBinder
 import com.chrynan.sitetheme.presenter.HomePresenter
 import com.chrynan.sitetheme.repository.source.FooterItemRepositorySource
 import com.chrynan.sitetheme.repository.source.MainNavigationItemRepositorySource
-import com.chrynan.sitetheme.repository.source.PostRepositorySource
+import com.chrynan.sitetheme.repository.source.PostViewModelRepositorySource
 import com.chrynan.sitetheme.templates.PostItemTemplate
 import com.chrynan.sitetheme.view.HomeView
 import com.chrynan.sitetheme.viewmodel.PostItemViewModel
@@ -21,7 +21,7 @@ class HomePage : HeaderFooterPage(),
         HomePresenter(
             this,
             this,
-            PostRepositorySource(),
+            PostViewModelRepositorySource(),
             MainNavigationItemRepositorySource(),
             FooterItemRepositorySource()
         )

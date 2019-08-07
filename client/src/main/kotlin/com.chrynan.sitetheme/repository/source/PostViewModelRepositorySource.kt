@@ -1,9 +1,10 @@
 package com.chrynan.sitetheme.repository.source
 
 import com.chrynan.sitetheme.repository.PostRepository
+import com.chrynan.sitetheme.repository.PostViewModelRepository
 import com.chrynan.sitetheme.viewmodel.PostItemViewModel
 
-class PostRepositorySource : PostRepository {
+class PostViewModelRepositorySource : PostViewModelRepository {
 
     override suspend fun getMostRecentPosts(): List<PostItemViewModel> {
         return listOf(
