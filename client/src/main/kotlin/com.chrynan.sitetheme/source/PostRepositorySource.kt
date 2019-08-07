@@ -27,6 +27,8 @@ class PostRepositorySource(private val webClient: KtorGraphQLWebClient) : PostRe
             }
         }
 
+        console.log("query = $query")
+
         return webClient.query(query)
     }
 

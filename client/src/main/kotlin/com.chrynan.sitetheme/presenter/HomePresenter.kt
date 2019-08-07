@@ -4,12 +4,14 @@ import com.chrynan.sitetheme.binder.HomeBinder
 import com.chrynan.sitetheme.repository.FooterItemRepository
 import com.chrynan.sitetheme.repository.MainNavigationItemRepository
 import com.chrynan.sitetheme.repository.PostRepository
+import com.chrynan.sitetheme.repository.PostViewModelRepository
 import com.chrynan.sitetheme.view.HomeView
 import kotlinx.coroutines.launch
 
 class HomePresenter(
     private val view: HomeView,
     private val binder: HomeBinder,
+    private val postViewModelRepository: PostViewModelRepository,
     private val postRepository: PostRepository,
     mainNavigationItemRepository: MainNavigationItemRepository,
     footerItemRepository: FooterItemRepository
@@ -24,9 +26,11 @@ class HomePresenter(
         launch {
             view.showProgressBar()
 
-            val postItems = postRepository.getMostRecentPosts()
+            val postViewModelItems = postViewModelRepository.getMostRecentPosts()
 
-            binder.bindPosts(postItems)
+            val postItems = postRepository.getPostListItemsAfter(first = 10, after = "After Cursor")
+
+            binder.bindPosts(postViewModelItems)
 
             view.hideProgressBar()
         }
