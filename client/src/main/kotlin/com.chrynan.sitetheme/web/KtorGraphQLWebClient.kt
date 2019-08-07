@@ -10,7 +10,7 @@ import io.ktor.client.request.post
 class KtorGraphQLWebClient(
     val httpClient: HttpClient,
     val baseUrl: String
-) : GraphQLWebClient {
+) {
 
     suspend inline fun <reified R> query(query: GraphQLQuery<RootQueryBuilder>): R =
         httpClient.post(baseUrl + query.toEncodedString())
