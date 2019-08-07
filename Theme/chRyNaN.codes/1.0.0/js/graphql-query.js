@@ -3,7 +3,6 @@ if (typeof kotlin === 'undefined') {
 }
 this['graphql-query'] = function (_, Kotlin) {
   'use strict';
-  var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
   var Unit = Kotlin.kotlin.Unit;
   var Kind_CLASS = Kotlin.Kind.CLASS;
@@ -15,10 +14,6 @@ this['graphql-query'] = function (_, Kotlin) {
   var Enum = Kotlin.kotlin.Enum;
   var throwISE = Kotlin.throwISE;
   var toString = Kotlin.toString;
-  var defineInlineFunction = Kotlin.defineInlineFunction;
-  var wrapFunction = Kotlin.wrapFunction;
-  var PropertyMetadata = Kotlin.PropertyMetadata;
-  var listOf = Kotlin.kotlin.collections.listOf_mh5how$;
   GraphQLSubscriptionBuilder.prototype = Object.create(BaseGraphQLQueryBuilder.prototype);
   GraphQLSubscriptionBuilder.prototype.constructor = GraphQLSubscriptionBuilder;
   GraphQLMutationBuilder.prototype = Object.create(BaseGraphQLQueryBuilder.prototype);
@@ -33,15 +28,10 @@ this['graphql-query'] = function (_, Kotlin) {
   RootGraphQLSubscriptionBuilder.prototype.constructor = RootGraphQLSubscriptionBuilder;
   GraphQLQueryType.prototype = Object.create(Enum.prototype);
   GraphQLQueryType.prototype.constructor = GraphQLQueryType;
-  TestRoot.prototype = Object.create(RootGraphQLQueryBuilder.prototype);
-  TestRoot.prototype.constructor = TestRoot;
-  UserGraphQLQueryBuilder.prototype = Object.create(GraphQLQueryBuilder.prototype);
-  UserGraphQLQueryBuilder.prototype.constructor = UserGraphQLQueryBuilder;
-  AvatarGraphQLQueryBuilder.prototype = Object.create(GraphQLQueryBuilder.prototype);
-  AvatarGraphQLQueryBuilder.prototype.constructor = AvatarGraphQLQueryBuilder;
   function BaseGraphQLQueryBuilder(queryType) {
     this.queryType = queryType;
     this.fieldNames = LinkedHashSet_init();
+    this.indentLevel_8be2vx$ = 1;
     this.sb_42csga$_0 = StringBuilder_init();
   }
   Object.defineProperty(BaseGraphQLQueryBuilder.prototype, 'isRoot', {
@@ -74,17 +64,26 @@ this['graphql-query'] = function (_, Kotlin) {
   BaseGraphQLQueryBuilder.prototype.gqlScalarWithParams_avw15n$ = function (name, parameters) {
     var fieldBuilder = new ScalarGraphQLQueryFieldBuilder(name, parameters);
     this.fieldNames.add_11rb$(name);
+    this.addIndents_10gdv1$_0();
     this.sb_42csga$_0.append_gw00v9$(fieldBuilder.build_8be2vx$());
   };
   BaseGraphQLQueryBuilder.prototype.gqlObject_tmotd3$ = function (name, parameters, objectBuilder, objectFieldBuilder) {
     if (parameters === void 0)
       parameters = emptyList();
-    var fieldBuilder = new ObjectGraphQLQueryFieldBuilder(name, parameters, objectBuilder, objectFieldBuilder);
+    var fieldBuilder = new ObjectGraphQLQueryFieldBuilder(name, parameters, objectBuilder, objectFieldBuilder, this.indentLevel_8be2vx$);
     this.fieldNames.add_11rb$(name);
+    this.addIndents_10gdv1$_0();
     this.sb_42csga$_0.append_gw00v9$(fieldBuilder.build_8be2vx$());
   };
-  BaseGraphQLQueryBuilder.prototype.build_8be2vx$ = function () {
+  BaseGraphQLQueryBuilder.prototype.build = function () {
     return this.sb_42csga$_0.toString();
+  };
+  BaseGraphQLQueryBuilder.prototype.addIndents_10gdv1$_0 = function () {
+    var tmp$;
+    tmp$ = this.indentLevel_8be2vx$;
+    for (var i = 0; i < tmp$; i++) {
+      this.sb_42csga$_0.append_gw00v9$('    ');
+    }
   };
   function BaseGraphQLQueryBuilder$gqlScalar($outer, name) {
     this.$outer = $outer;
@@ -93,6 +92,7 @@ this['graphql-query'] = function (_, Kotlin) {
   BaseGraphQLQueryBuilder$gqlScalar.prototype.getValue_lrcp0p$ = function (thisRef, property) {
     var fieldBuilder = new ScalarGraphQLQueryFieldBuilder(this.name);
     this.$outer.fieldNames.add_11rb$(this.name);
+    this.$outer.addIndents_10gdv1$_0();
     this.$outer.sb_42csga$_0.append_gw00v9$(fieldBuilder.build_8be2vx$());
     return Unit;
   };
@@ -152,6 +152,13 @@ this['graphql-query'] = function (_, Kotlin) {
       return true;
     }
   });
+  RootGraphQLQueryBuilder.prototype.build = function () {
+    var $receiver = StringBuilder_init();
+    $receiver.append_gw00v9$('{\n');
+    $receiver.append_gw00v9$(GraphQLQueryBuilder.prototype.build.call(this));
+    $receiver.append_gw00v9$('}');
+    return $receiver.toString();
+  };
   RootGraphQLQueryBuilder.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'RootGraphQLQueryBuilder',
@@ -226,15 +233,12 @@ this['graphql-query'] = function (_, Kotlin) {
     this.builder = builder;
     this.query = query;
   }
-  GraphQLQuery.prototype.toGraphQLQueryString = function () {
-    this.query(this.builder);
-    return this.builder.build_8be2vx$();
-  };
   GraphQLQuery.prototype.toDecodedString = function () {
-    return this.toGraphQLQueryString();
+    this.query(this.builder);
+    return this.builder.build();
   };
   GraphQLQuery.prototype.toEncodedString = function () {
-    return this.toGraphQLQueryString();
+    return this.toDecodedString();
   };
   GraphQLQuery.$metadata$ = {
     kind: Kind_CLASS,
@@ -367,28 +371,35 @@ this['graphql-query'] = function (_, Kotlin) {
     }
   }
   GraphQLQueryType.valueOf_61zpoe$ = GraphQLQueryType$valueOf;
-  function ObjectGraphQLQueryFieldBuilder(name, parameters, objectBuilder, objectFieldBuilder) {
+  function ObjectGraphQLQueryFieldBuilder(name, parameters, objectBuilder, objectFieldBuilder, indentLevel) {
     if (parameters === void 0)
       parameters = emptyList();
+    if (indentLevel === void 0)
+      indentLevel = 1;
     this.name = name;
     this.parameters = parameters;
     this.objectBuilder = objectBuilder;
     this.objectFieldBuilder = objectFieldBuilder;
+    this.indentLevel = indentLevel;
   }
   ObjectGraphQLQueryFieldBuilder.prototype.build_8be2vx$ = function () {
     var $receiver = StringBuilder_init();
-    var tmp$;
+    var tmp$, tmp$_0;
     $receiver.append_gw00v9$(this.name);
     tmp$ = this.parameters.iterator();
     while (tmp$.hasNext()) {
       var parameter = tmp$.next();
       $receiver.append_gw00v9$(parameter.name + ' = ' + toString(parameter.value));
     }
-    $receiver.append_gw00v9$(' ');
-    $receiver.append_gw00v9$('{');
+    $receiver.append_gw00v9$(' {\n');
+    this.objectBuilder.indentLevel_8be2vx$ = this.indentLevel + 1 | 0;
     this.objectFieldBuilder(this.objectBuilder);
-    $receiver.append_gw00v9$(this.objectBuilder.build_8be2vx$());
-    $receiver.append_gw00v9$('}');
+    $receiver.append_gw00v9$(this.objectBuilder.build());
+    tmp$_0 = this.indentLevel;
+    for (var i = 0; i < tmp$_0; i++) {
+      $receiver.append_gw00v9$('    ');
+    }
+    $receiver.append_gw00v9$('}\n');
     return $receiver.toString();
   };
   ObjectGraphQLQueryFieldBuilder.$metadata$ = {
@@ -408,11 +419,14 @@ this['graphql-query'] = function (_, Kotlin) {
   ObjectGraphQLQueryFieldBuilder.prototype.component4 = function () {
     return this.objectFieldBuilder;
   };
-  ObjectGraphQLQueryFieldBuilder.prototype.copy_ieucqs$ = function (name, parameters, objectBuilder, objectFieldBuilder) {
-    return new ObjectGraphQLQueryFieldBuilder(name === void 0 ? this.name : name, parameters === void 0 ? this.parameters : parameters, objectBuilder === void 0 ? this.objectBuilder : objectBuilder, objectFieldBuilder === void 0 ? this.objectFieldBuilder : objectFieldBuilder);
+  ObjectGraphQLQueryFieldBuilder.prototype.component5 = function () {
+    return this.indentLevel;
+  };
+  ObjectGraphQLQueryFieldBuilder.prototype.copy_77zo1i$ = function (name, parameters, objectBuilder, objectFieldBuilder, indentLevel) {
+    return new ObjectGraphQLQueryFieldBuilder(name === void 0 ? this.name : name, parameters === void 0 ? this.parameters : parameters, objectBuilder === void 0 ? this.objectBuilder : objectBuilder, objectFieldBuilder === void 0 ? this.objectFieldBuilder : objectFieldBuilder, indentLevel === void 0 ? this.indentLevel : indentLevel);
   };
   ObjectGraphQLQueryFieldBuilder.prototype.toString = function () {
-    return 'ObjectGraphQLQueryFieldBuilder(name=' + Kotlin.toString(this.name) + (', parameters=' + Kotlin.toString(this.parameters)) + (', objectBuilder=' + Kotlin.toString(this.objectBuilder)) + (', objectFieldBuilder=' + Kotlin.toString(this.objectFieldBuilder)) + ')';
+    return 'ObjectGraphQLQueryFieldBuilder(name=' + Kotlin.toString(this.name) + (', parameters=' + Kotlin.toString(this.parameters)) + (', objectBuilder=' + Kotlin.toString(this.objectBuilder)) + (', objectFieldBuilder=' + Kotlin.toString(this.objectFieldBuilder)) + (', indentLevel=' + Kotlin.toString(this.indentLevel)) + ')';
   };
   ObjectGraphQLQueryFieldBuilder.prototype.hashCode = function () {
     var result = 0;
@@ -420,10 +434,11 @@ this['graphql-query'] = function (_, Kotlin) {
     result = result * 31 + Kotlin.hashCode(this.parameters) | 0;
     result = result * 31 + Kotlin.hashCode(this.objectBuilder) | 0;
     result = result * 31 + Kotlin.hashCode(this.objectFieldBuilder) | 0;
+    result = result * 31 + Kotlin.hashCode(this.indentLevel) | 0;
     return result;
   };
   ObjectGraphQLQueryFieldBuilder.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.name, other.name) && Kotlin.equals(this.parameters, other.parameters) && Kotlin.equals(this.objectBuilder, other.objectBuilder) && Kotlin.equals(this.objectFieldBuilder, other.objectFieldBuilder)))));
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.name, other.name) && Kotlin.equals(this.parameters, other.parameters) && Kotlin.equals(this.objectBuilder, other.objectBuilder) && Kotlin.equals(this.objectFieldBuilder, other.objectFieldBuilder) && Kotlin.equals(this.indentLevel, other.indentLevel)))));
   };
   function ScalarGraphQLQueryFieldBuilder(name, parameters) {
     if (parameters === void 0)
@@ -440,6 +455,7 @@ this['graphql-query'] = function (_, Kotlin) {
       var parameter = tmp$.next();
       $receiver.append_gw00v9$(parameter.name + ' = ' + toString(parameter.value));
     }
+    $receiver.append_gw00v9$('\n');
     return $receiver.toString();
   };
   ScalarGraphQLQueryFieldBuilder.$metadata$ = {
@@ -467,111 +483,6 @@ this['graphql-query'] = function (_, Kotlin) {
   };
   ScalarGraphQLQueryFieldBuilder.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.name, other.name) && Kotlin.equals(this.parameters, other.parameters)))));
-  };
-  var query_0 = defineInlineFunction('graphql-query.com.chrynan.graphqlquerybuilder.query_4mvek5$', wrapFunction(function () {
-    var TestRoot_init = _.com.chrynan.graphqlquerybuilder.TestRoot;
-    var query = _.com.chrynan.graphqlquerybuilder.query_fdm211$;
-    return function (Q_0, isQ, query_0) {
-      return query(new TestRoot_init(), query_0);
-    };
-  }));
-  function test$lambda($receiver) {
-    $receiver.default;
-    $receiver.extraAttr;
-    $receiver.width;
-    $receiver.height;
-    return Unit;
-  }
-  function test$lambda$lambda$lambda(closure$comparisonFields) {
-    return function ($receiver) {
-      rangeTo($receiver, closure$comparisonFields);
-      return Unit;
-    };
-  }
-  function test$lambda$lambda(closure$comparisonFields) {
-    return function ($receiver) {
-      $receiver.id;
-      $receiver.description;
-      $receiver.email;
-      $receiver.avatar_ddp3v0$(test$lambda$lambda$lambda(closure$comparisonFields));
-      return Unit;
-    };
-  }
-  function test$lambda_0(closure$comparisonFields) {
-    return function ($receiver) {
-      $receiver.id;
-      $receiver.viewer_dxegfy$(test$lambda$lambda(closure$comparisonFields));
-      return Unit;
-    };
-  }
-  function test(builder) {
-    var comparisonFields = fragment().on_a9kq36$(test$lambda);
-    query(new TestRoot(), test$lambda_0(comparisonFields));
-  }
-  function TestRoot() {
-    RootGraphQLQueryBuilder.call(this);
-    this.id = new BaseGraphQLQueryBuilder$gqlScalar(this, 'id');
-  }
-  TestRoot.prototype.viewer_dxegfy$ = function (builder) {
-    this.gqlObject_tmotd3$('viewer', void 0, new UserGraphQLQueryBuilder(), builder);
-  };
-  TestRoot.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'TestRoot',
-    interfaces: [RootGraphQLQueryBuilder]
-  };
-  function UserGraphQLQueryBuilder() {
-    GraphQLQueryBuilder.call(this);
-    this.id_nu4jo$_0 = new BaseGraphQLQueryBuilder$gqlScalar(this, 'id');
-    this.description_h0odi1$_0 = new BaseGraphQLQueryBuilder$gqlScalar(this, 'description');
-    this.email_mog9on$_0 = new BaseGraphQLQueryBuilder$gqlScalar(this, 'email');
-  }
-  var UserGraphQLQueryBuilder$id_metadata = new PropertyMetadata('id');
-  Object.defineProperty(UserGraphQLQueryBuilder.prototype, 'id', {
-    get: function () {
-      return this.id_nu4jo$_0.getValue_lrcp0p$(this, UserGraphQLQueryBuilder$id_metadata);
-    }
-  });
-  var UserGraphQLQueryBuilder$description_metadata = new PropertyMetadata('description');
-  Object.defineProperty(UserGraphQLQueryBuilder.prototype, 'description', {
-    get: function () {
-      return this.description_h0odi1$_0.getValue_lrcp0p$(this, UserGraphQLQueryBuilder$description_metadata);
-    }
-  });
-  var UserGraphQLQueryBuilder$email_metadata = new PropertyMetadata('email');
-  Object.defineProperty(UserGraphQLQueryBuilder.prototype, 'email', {
-    get: function () {
-      return this.email_mog9on$_0.getValue_lrcp0p$(this, UserGraphQLQueryBuilder$email_metadata);
-    }
-  });
-  UserGraphQLQueryBuilder.prototype.name_61zpoe$ = function (type) {
-    this.gqlScalarWithParams_avw15n$('name', listOf(this.gqlParam_fmz8iu$('type', void 0, type)));
-  };
-  UserGraphQLQueryBuilder.prototype.avatar_ddp3v0$ = function (builder) {
-    this.gqlObject_tmotd3$('avatar', void 0, new AvatarGraphQLQueryBuilder(), builder);
-  };
-  UserGraphQLQueryBuilder.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'UserGraphQLQueryBuilder',
-    interfaces: [GraphQLQueryBuilder]
-  };
-  function AvatarGraphQLQueryBuilder() {
-    GraphQLQueryBuilder.call(this);
-    this.default_e5odhe$_0 = new BaseGraphQLQueryBuilder$gqlScalar(this, 'default');
-    this.extraAttr = new BaseGraphQLQueryBuilder$gqlScalar(this, 'extraAttr');
-    this.height = new BaseGraphQLQueryBuilder$gqlScalar(this, 'height');
-    this.width = new BaseGraphQLQueryBuilder$gqlScalar(this, 'width');
-  }
-  var AvatarGraphQLQueryBuilder$default_metadata = new PropertyMetadata('default');
-  Object.defineProperty(AvatarGraphQLQueryBuilder.prototype, 'default', {
-    get: function () {
-      return this.default_e5odhe$_0.getValue_lrcp0p$(this, AvatarGraphQLQueryBuilder$default_metadata);
-    }
-  });
-  AvatarGraphQLQueryBuilder.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'AvatarGraphQLQueryBuilder',
-    interfaces: [GraphQLQueryBuilder]
   };
   BaseGraphQLQueryBuilder.gqlScalar = BaseGraphQLQueryBuilder$gqlScalar;
   var package$com = _.com || (_.com = {});
@@ -608,11 +519,6 @@ this['graphql-query'] = function (_, Kotlin) {
   package$graphqlquerybuilder.GraphQLQueryType = GraphQLQueryType;
   package$graphqlquerybuilder.ObjectGraphQLQueryFieldBuilder = ObjectGraphQLQueryFieldBuilder;
   package$graphqlquerybuilder.ScalarGraphQLQueryFieldBuilder = ScalarGraphQLQueryFieldBuilder;
-  $$importsForInline$$['graphql-query'] = _;
-  package$graphqlquerybuilder.test_t5vezp$ = test;
-  package$graphqlquerybuilder.TestRoot = TestRoot;
-  package$graphqlquerybuilder.UserGraphQLQueryBuilder = UserGraphQLQueryBuilder;
-  package$graphqlquerybuilder.AvatarGraphQLQueryBuilder = AvatarGraphQLQueryBuilder;
   Kotlin.defineModule('graphql-query', _);
   return _;
 }(typeof this['graphql-query'] === 'undefined' ? {} : this['graphql-query'], kotlin);
