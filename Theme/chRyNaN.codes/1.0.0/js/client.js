@@ -4,9 +4,6 @@ if (typeof kotlin === 'undefined') {
 if (typeof this['kotlinx-html-js'] === 'undefined') {
   throw new Error("Error loading module 'client'. Its dependency 'kotlinx-html-js' was not found. Please, check whether 'kotlinx-html-js' is loaded prior to 'client'.");
 }
-if (typeof this['ktor-client-core'] === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-core' was not found. Please, check whether 'ktor-client-core' is loaded prior to 'client'.");
-}
 if (typeof this['kotlinx-coroutines-core'] === 'undefined') {
   throw new Error("Error loading module 'client'. Its dependency 'kotlinx-coroutines-core' was not found. Please, check whether 'kotlinx-coroutines-core' is loaded prior to 'client'.");
 }
@@ -16,7 +13,16 @@ if (typeof this['graphql-query'] === 'undefined') {
 if (typeof common === 'undefined') {
   throw new Error("Error loading module 'client'. Its dependency 'common' was not found. Please, check whether 'common' is loaded prior to 'client'.");
 }
-var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_core, $module$kotlinx_coroutines_core, $module$graphql_query, $module$common) {
+if (typeof this['ktor-client-core'] === 'undefined') {
+  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-core' was not found. Please, check whether 'ktor-client-core' is loaded prior to 'client'.");
+}
+if (typeof this['ktor-client-json'] === 'undefined') {
+  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-json' was not found. Please, check whether 'ktor-client-json' is loaded prior to 'client'.");
+}
+if (typeof this['ktor-client-logging'] === 'undefined') {
+  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-logging' was not found. Please, check whether 'ktor-client-logging' is loaded prior to 'client'.");
+}
+var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_coroutines_core, $module$graphql_query, $module$common, $module$ktor_client_core, $module$ktor_client_json, $module$ktor_client_logging) {
   'use strict';
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var Unit = Kotlin.kotlin.Unit;
@@ -33,8 +39,6 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
   var trimIndent = Kotlin.kotlin.text.trimIndent_pdl1vz$;
   var set_style = $module$kotlinx_html_js.kotlinx.html.set_style_ueiko3$;
   var div_0 = $module$kotlinx_html_js.kotlinx.html.div_59el9d$;
-  var js = $module$ktor_client_core.io.ktor.client.engine.js;
-  var HttpClient = $module$ktor_client_core.io.ktor.client.HttpClient_744i18$;
   var h1 = $module$kotlinx_html_js.kotlinx.html.h1_vmej1w$;
   var header = $module$kotlinx_html_js.kotlinx.html.header_8btlf7$;
   var main = $module$kotlinx_html_js.kotlinx.html.main_m1e3ev$;
@@ -42,6 +46,7 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
   var COROUTINE_SUSPENDED = Kotlin.kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED;
   var CoroutineImpl = Kotlin.kotlin.coroutines.CoroutineImpl;
   var launch = $module$kotlinx_coroutines_core.kotlinx.coroutines.launch_s496o7$;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var SupervisorJob = $module$kotlinx_coroutines_core.kotlinx.coroutines.SupervisorJob_5dx9e$;
   var coroutines = $module$kotlinx_coroutines_core.kotlinx.coroutines;
   var CoroutineScope = $module$kotlinx_coroutines_core.kotlinx.coroutines.CoroutineScope;
@@ -56,6 +61,13 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
   var fragment = $module$graphql_query.com.chrynan.graphqlquerybuilder.fragment_p31hh$;
   var rangeTo = $module$graphql_query.com.chrynan.graphqlquerybuilder.rangeTo_pshcop$;
   var PostListItemConnection = $module$common.com.chrynan.sitetheme.model.PostListItemConnection;
+  var js = $module$ktor_client_core.io.ktor.client.engine.js;
+  var JsonFeature = $module$ktor_client_json.io.ktor.client.features.json.JsonFeature;
+  var Logging = $module$ktor_client_logging.io.ktor.client.features.logging.Logging;
+  var Logger = $module$ktor_client_logging.io.ktor.client.features.logging.Logger;
+  var get_DEFAULT = $module$ktor_client_logging.io.ktor.client.features.logging.get_DEFAULT_3z44iy$;
+  var LogLevel = $module$ktor_client_logging.io.ktor.client.features.logging.LogLevel;
+  var HttpClient = $module$ktor_client_core.io.ktor.client.HttpClient_744i18$;
   var PostRepository = $module$common.com.chrynan.sitetheme.repository.PostRepository;
   var header_0 = $module$ktor_client_core.io.ktor.client.request.header_xadl6p$;
   var takeFrom = $module$ktor_client_core.$$importsForInline$$['ktor-http'].io.ktor.http.takeFrom_jl1sg7$;
@@ -384,7 +396,7 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
   };
   function HomePage$presenter$lambda(this$HomePage) {
     return function () {
-      return new HomePresenter(this$HomePage, this$HomePage, new PostViewModelRepositorySource(), new PostRepositorySource(new KtorGraphQLWebClient(HttpClient(js.Js), 'https://chrynan.codes')), new MainNavigationItemRepositorySource(), new FooterItemRepositorySource());
+      return new HomePresenter(this$HomePage, this$HomePage, new PostViewModelRepositorySource(), new PostRepositorySource(), new MainNavigationItemRepositorySource(), new FooterItemRepositorySource());
     };
   }
   function HomePage$postTemplate$lambda() {
@@ -652,6 +664,7 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
       try {
         switch (this.state_0) {
           case 0:
+            println('HomePresenter: loadPosts: launch');
             this.local$this$HomePresenter.view_0.showProgressBar();
             this.state_0 = 2;
             this.result_0 = this.local$this$HomePresenter.postViewModelRepository_0.getMostRecentPosts(this);
@@ -669,6 +682,7 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
             continue;
           case 3:
             var postItems = this.result_0;
+            println('HomePresenter: loadPosts: launch: after getPostListItemsAfter() call');
             this.local$this$HomePresenter.binder_0.bindPosts_da2kou$(this.local$postViewModelItems);
             return this.local$this$HomePresenter.view_0.hideProgressBar(), Unit;
           default:this.state_0 = 1;
@@ -2337,15 +2351,15 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
   function post$lambda($receiver) {
     return Unit;
   }
-  function KtorGraphQLWebClient$query$lambda(closure$query) {
+  function executeWith$lambda(this$executeWith) {
     return function ($receiver) {
       header_0($receiver, 'Content-Type', 'application/json');
-      $receiver.body = new GraphQLQueryBody(closure$query.toEncodedString());
+      $receiver.body = new GraphQLQueryBody(this$executeWith.toEncodedString());
       return Unit;
     };
   }
-  function PostRepositorySource(webClient) {
-    this.webClient_0 = webClient;
+  function PostRepositorySource() {
+    this.httpClient_0 = HttpClient(js.Js, PostRepositorySource$httpClient$lambda);
   }
   function PostRepositorySource$getPostListItemsAfter$lambda$lambda$lambda($receiver) {
     rangeTo($receiver, get_pageInfoFragment());
@@ -2395,11 +2409,11 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
       try {
         switch (this.state_0) {
           case 0:
+            var tmp$;
             var query = query_0(PostRepositorySource$getPostListItemsAfter$lambda(this.local$first, this.local$after));
-            console.log('query = ' + query);
-            var $this = this.$this.webClient_0;
-            var $receiver_0 = $this.httpClient;
-            var urlString = $this.baseUrl;
+            console.log('executeWith = ' + query.toDecodedString());
+            tmp$ = this.$this.httpClient_0;
+            var baseUrl = 'https://chrynan.codes';
             var host_0;
             var body_0;
             host_0 = 'localhost';
@@ -2408,10 +2422,10 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
             url($receiver_1, 'http', host_0, 0, '/');
             $receiver_1.method = HttpMethod.Companion.Post;
             $receiver_1.body = body_0;
-            takeFrom($receiver_1.url, urlString);
-            KtorGraphQLWebClient$query$lambda(query)($receiver_1);
+            takeFrom($receiver_1.url, baseUrl);
+            executeWith$lambda(query)($receiver_1);
             this.state_0 = 2;
-            this.result_0 = call($receiver_0, $receiver_1, this);
+            this.result_0 = call(tmp$, $receiver_1, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
@@ -2499,10 +2513,10 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
       try {
         switch (this.state_0) {
           case 0:
+            var tmp$;
             var query = query_0(PostRepositorySource$getPostListItemsBefore$lambda(this.local$last, this.local$before));
-            var $this = this.$this.webClient_0;
-            var $receiver_0 = $this.httpClient;
-            var urlString = $this.baseUrl;
+            tmp$ = this.$this.httpClient_0;
+            var baseUrl = 'https://chrynan.codes';
             var host_0;
             var body_0;
             host_0 = 'localhost';
@@ -2511,10 +2525,10 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
             url($receiver_1, 'http', host_0, 0, '/');
             $receiver_1.method = HttpMethod.Companion.Post;
             $receiver_1.body = body_0;
-            takeFrom($receiver_1.url, urlString);
-            KtorGraphQLWebClient$query$lambda(query)($receiver_1);
+            takeFrom($receiver_1.url, baseUrl);
+            executeWith$lambda(query)($receiver_1);
             this.state_0 = 2;
-            this.result_0 = call($receiver_0, $receiver_1, this);
+            this.result_0 = call(tmp$, $receiver_1, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
@@ -2554,6 +2568,16 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
     else
       return instance.doResume(null);
   };
+  function PostRepositorySource$httpClient$lambda$lambda($receiver) {
+    $receiver.logger = get_DEFAULT(Logger.Companion);
+    $receiver.level = LogLevel.ALL;
+    return Unit;
+  }
+  function PostRepositorySource$httpClient$lambda($receiver) {
+    $receiver.install_xlxg29$(JsonFeature.Feature);
+    $receiver.install_xlxg29$(Logging.Companion, PostRepositorySource$httpClient$lambda$lambda);
+    return Unit;
+  }
   PostRepositorySource.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'PostRepositorySource',
@@ -3120,45 +3144,34 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
   function post$lambda_0($receiver) {
     return Unit;
   }
-  function KtorGraphQLWebClient$query$lambda_0(closure$query) {
+  function executeWith$lambda_0(this$executeWith) {
     return function ($receiver) {
       header_0($receiver, 'Content-Type', 'application/json');
-      $receiver.body = new GraphQLQueryBody(closure$query.toEncodedString());
+      $receiver.body = new GraphQLQueryBody(this$executeWith.toEncodedString());
       return Unit;
     };
   }
-  function post$lambda_1($receiver) {
-    return Unit;
-  }
-  function post$lambda_2($receiver) {
-    return Unit;
-  }
-  function KtorGraphQLWebClient(httpClient, baseUrl) {
-    this.httpClient = httpClient;
-    this.baseUrl = baseUrl;
-  }
-  function Coroutine$query_3nl1o6$($this, R_0_0, isR_0, query_0, continuation_0) {
+  function Coroutine$executeWith(R_0_0, isR_0, $receiver_0, baseUrl_0, httpClient_0, continuation_0) {
     CoroutineImpl.call(this, continuation_0);
     this.exceptionState_0 = 1;
-    this.$this = $this;
     this.local$R_0 = R_0_0;
     this.local$isR = isR_0;
-    this.local$query = query_0;
+    this.local$$receiver = $receiver_0;
+    this.local$baseUrl = baseUrl_0;
+    this.local$httpClient = httpClient_0;
   }
-  Coroutine$query_3nl1o6$.$metadata$ = {
+  Coroutine$executeWith.$metadata$ = {
     kind: Kotlin.Kind.CLASS,
     simpleName: null,
     interfaces: [CoroutineImpl]
   };
-  Coroutine$query_3nl1o6$.prototype = Object.create(CoroutineImpl.prototype);
-  Coroutine$query_3nl1o6$.prototype.constructor = Coroutine$query_3nl1o6$;
-  Coroutine$query_3nl1o6$.prototype.doResume = function () {
+  Coroutine$executeWith.prototype = Object.create(CoroutineImpl.prototype);
+  Coroutine$executeWith.prototype.constructor = Coroutine$executeWith;
+  Coroutine$executeWith.prototype.doResume = function () {
     do
       try {
         switch (this.state_0) {
           case 0:
-            var $receiver_0_0 = this.$this.httpClient;
-            var urlString_0 = this.$this.baseUrl;
             var host_0_0;
             var body_0_0;
             host_0_0 = 'localhost';
@@ -3167,10 +3180,10 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
             url($receiver_1_0, 'http', host_0_0, 0, '/');
             $receiver_1_0.method = HttpMethod.Companion.Post;
             $receiver_1_0.body = body_0_0;
-            takeFrom($receiver_1_0.url, urlString_0);
-            KtorGraphQLWebClient$query$lambda_0(this.local$query)($receiver_1_0);
+            takeFrom($receiver_1_0.url, this.local$baseUrl);
+            executeWith$lambda_0(this.local$$receiver)($receiver_1_0);
             this.state_0 = 2;
-            this.result_0 = call($receiver_0_0, $receiver_1_0, this);
+            this.result_0 = call(this.local$httpClient, $receiver_1_0, this);
             if (this.result_0 === COROUTINE_SUSPENDED)
               return COROUTINE_SUSPENDED;
             continue;
@@ -3203,14 +3216,14 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
       }
      while (true);
   };
-  KtorGraphQLWebClient.prototype.query_3nl1o6$ = function (R_0_0, isR_0, query_0, continuation_0, suspended) {
-    var instance = new Coroutine$query_3nl1o6$(this, R_0_0, isR_0, query_0, continuation_0);
+  function executeWith(R_0_0, isR_0, $receiver_0, baseUrl_0, httpClient_0, continuation_0, suspended) {
+    var instance = new Coroutine$executeWith(R_0_0, isR_0, $receiver_0, baseUrl_0, httpClient_0, continuation_0);
     if (suspended)
       return instance;
     else
       return instance.doResume(null);
-  };
-  defineInlineFunction('client.com.chrynan.sitetheme.web.KtorGraphQLWebClient.query_3nl1o6$', wrapFunction(function () {
+  }
+  defineInlineFunction('client.com.chrynan.sitetheme.web.executeWith_mil60l$', wrapFunction(function () {
     var header = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.request.header_xadl6p$;
     var GraphQLQueryBody_init = _.com.chrynan.sitetheme.web.GraphQLQueryBody;
     var Unit = Kotlin.kotlin.Unit;
@@ -3227,16 +3240,14 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
     function post$lambda($receiver) {
       return Unit;
     }
-    function KtorGraphQLWebClient$query$lambda(closure$query) {
+    function executeWith$lambda(this$executeWith) {
       return function ($receiver) {
         header($receiver, 'Content-Type', 'application/json');
-        $receiver.body = new GraphQLQueryBody_init(closure$query.toEncodedString());
+        $receiver.body = new GraphQLQueryBody_init(this$executeWith.toEncodedString());
         return Unit;
       };
     }
-    return function (R_0, isR, query, continuation) {
-      var $receiver_0_0 = this.httpClient;
-      var urlString_0 = this.baseUrl;
+    return function (R_0, isR, $receiver, baseUrl, httpClient, continuation) {
       var host_0_0;
       var body_0_0;
       host_0_0 = 'localhost';
@@ -3245,9 +3256,9 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
       url($receiver_1_0, 'http', host_0_0, 0, '/');
       $receiver_1_0.method = HttpMethod.Companion.Post;
       $receiver_1_0.body = body_0_0;
-      takeFrom($receiver_1_0.url, urlString_0);
-      KtorGraphQLWebClient$query$lambda(query)($receiver_1_0);
-      Kotlin.suspendCall(call($receiver_0_0, $receiver_1_0, Kotlin.coroutineReceiver()));
+      takeFrom($receiver_1_0.url, baseUrl);
+      executeWith$lambda($receiver)($receiver_1_0);
+      Kotlin.suspendCall(call(httpClient, $receiver_1_0, Kotlin.coroutineReceiver()));
       var tmp$_0_0;
       Kotlin.suspendCall(Kotlin.coroutineResult(Kotlin.coroutineReceiver()).receive_jo9acv$(new TypeInfo_init(getKClass(R_0), call_0.JsType), Kotlin.coroutineReceiver()));
       Kotlin.setCoroutineResult(isR(tmp$_0_0 = Kotlin.coroutineResult(Kotlin.coroutineReceiver())) ? tmp$_0_0 : throwCCE(), Kotlin.coroutineReceiver());
@@ -3255,229 +3266,6 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
       return Kotlin.coroutineResult(Kotlin.coroutineReceiver());
     };
   }));
-  function Coroutine$mutation_rqkdeg$($this, R_0_0, isR_0, query_0, continuation_0) {
-    CoroutineImpl.call(this, continuation_0);
-    this.exceptionState_0 = 1;
-    this.$this = $this;
-    this.local$R_0 = R_0_0;
-    this.local$isR = isR_0;
-    this.local$query = query_0;
-  }
-  Coroutine$mutation_rqkdeg$.$metadata$ = {
-    kind: Kotlin.Kind.CLASS,
-    simpleName: null,
-    interfaces: [CoroutineImpl]
-  };
-  Coroutine$mutation_rqkdeg$.prototype = Object.create(CoroutineImpl.prototype);
-  Coroutine$mutation_rqkdeg$.prototype.constructor = Coroutine$mutation_rqkdeg$;
-  Coroutine$mutation_rqkdeg$.prototype.doResume = function () {
-    do
-      try {
-        switch (this.state_0) {
-          case 0:
-            var $receiver_0_0 = this.$this.httpClient;
-            var urlString_0 = this.$this.baseUrl + this.local$query.toEncodedString();
-            var host_0_0;
-            var body_0_0;
-            host_0_0 = 'localhost';
-            body_0_0 = utils.EmptyContent;
-            var $receiver_1_0 = new HttpRequestBuilder_init();
-            url($receiver_1_0, 'http', host_0_0, 0, '/');
-            $receiver_1_0.method = HttpMethod.Companion.Post;
-            $receiver_1_0.body = body_0_0;
-            takeFrom($receiver_1_0.url, urlString_0);
-            post$lambda_1($receiver_1_0);
-            this.state_0 = 2;
-            this.result_0 = call($receiver_0_0, $receiver_1_0, this);
-            if (this.result_0 === COROUTINE_SUSPENDED)
-              return COROUTINE_SUSPENDED;
-            continue;
-          case 1:
-            throw this.exception_0;
-          case 2:
-            var tmp$_0_0;
-            this.state_0 = 3;
-            this.result_0 = this.result_0.receive_jo9acv$(new TypeInfo_init(getKClass(this.local$R_0), call_0.JsType), this);
-            if (this.result_0 === COROUTINE_SUSPENDED)
-              return COROUTINE_SUSPENDED;
-            continue;
-          case 3:
-            this.result_0 = this.local$isR(tmp$_0_0 = this.result_0) ? tmp$_0_0 : throwCCE();
-            this.result_0;
-            return this.result_0;
-          default:this.state_0 = 1;
-            throw new Error('State Machine Unreachable execution');
-        }
-      }
-       catch (e) {
-        if (this.state_0 === 1) {
-          this.exceptionState_0 = this.state_0;
-          throw e;
-        }
-         else {
-          this.state_0 = this.exceptionState_0;
-          this.exception_0 = e;
-        }
-      }
-     while (true);
-  };
-  KtorGraphQLWebClient.prototype.mutation_rqkdeg$ = function (R_0_0, isR_0, query_0, continuation_0, suspended) {
-    var instance = new Coroutine$mutation_rqkdeg$(this, R_0_0, isR_0, query_0, continuation_0);
-    if (suspended)
-      return instance;
-    else
-      return instance.doResume(null);
-  };
-  defineInlineFunction('client.com.chrynan.sitetheme.web.KtorGraphQLWebClient.mutation_rqkdeg$', wrapFunction(function () {
-    var Unit = Kotlin.kotlin.Unit;
-    var takeFrom = _.$$importsForInline$$['ktor-client-core'].$$importsForInline$$['ktor-http'].io.ktor.http.takeFrom_jl1sg7$;
-    var utils = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.utils;
-    var url = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.request.url_3rzbk2$;
-    var HttpMethod = _.$$importsForInline$$['ktor-client-core'].$$importsForInline$$['ktor-http'].io.ktor.http.HttpMethod;
-    var HttpRequestBuilder_init = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.request.HttpRequestBuilder;
-    var call = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.call.call_30bfl5$;
-    var throwCCE = Kotlin.throwCCE;
-    var getKClass = Kotlin.getKClass;
-    var call_0 = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.call;
-    var TypeInfo_init = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.call.TypeInfo;
-    function post$lambda($receiver) {
-      return Unit;
-    }
-    return function (R_0, isR, query, continuation) {
-      var $receiver_0_0 = this.httpClient;
-      var urlString_0 = this.baseUrl + query.toEncodedString();
-      var host_0_0;
-      var body_0_0;
-      host_0_0 = 'localhost';
-      body_0_0 = utils.EmptyContent;
-      var $receiver_1_0 = new HttpRequestBuilder_init();
-      url($receiver_1_0, 'http', host_0_0, 0, '/');
-      $receiver_1_0.method = HttpMethod.Companion.Post;
-      $receiver_1_0.body = body_0_0;
-      takeFrom($receiver_1_0.url, urlString_0);
-      post$lambda($receiver_1_0);
-      Kotlin.suspendCall(call($receiver_0_0, $receiver_1_0, Kotlin.coroutineReceiver()));
-      var tmp$_0_0;
-      Kotlin.suspendCall(Kotlin.coroutineResult(Kotlin.coroutineReceiver()).receive_jo9acv$(new TypeInfo_init(getKClass(R_0), call_0.JsType), Kotlin.coroutineReceiver()));
-      Kotlin.setCoroutineResult(isR(tmp$_0_0 = Kotlin.coroutineResult(Kotlin.coroutineReceiver())) ? tmp$_0_0 : throwCCE(), Kotlin.coroutineReceiver());
-      Kotlin.coroutineResult(Kotlin.coroutineReceiver());
-      return Kotlin.coroutineResult(Kotlin.coroutineReceiver());
-    };
-  }));
-  function Coroutine$subscription_isi6of$($this, R_0_0, isR_0, query_0, continuation_0) {
-    CoroutineImpl.call(this, continuation_0);
-    this.exceptionState_0 = 1;
-    this.$this = $this;
-    this.local$R_0 = R_0_0;
-    this.local$isR = isR_0;
-    this.local$query = query_0;
-  }
-  Coroutine$subscription_isi6of$.$metadata$ = {
-    kind: Kotlin.Kind.CLASS,
-    simpleName: null,
-    interfaces: [CoroutineImpl]
-  };
-  Coroutine$subscription_isi6of$.prototype = Object.create(CoroutineImpl.prototype);
-  Coroutine$subscription_isi6of$.prototype.constructor = Coroutine$subscription_isi6of$;
-  Coroutine$subscription_isi6of$.prototype.doResume = function () {
-    do
-      try {
-        switch (this.state_0) {
-          case 0:
-            var $receiver_0_0 = this.$this.httpClient;
-            var urlString_0 = this.$this.baseUrl + this.local$query.toEncodedString();
-            var host_0_0;
-            var body_0_0;
-            host_0_0 = 'localhost';
-            body_0_0 = utils.EmptyContent;
-            var $receiver_1_0 = new HttpRequestBuilder_init();
-            url($receiver_1_0, 'http', host_0_0, 0, '/');
-            $receiver_1_0.method = HttpMethod.Companion.Post;
-            $receiver_1_0.body = body_0_0;
-            takeFrom($receiver_1_0.url, urlString_0);
-            post$lambda_2($receiver_1_0);
-            this.state_0 = 2;
-            this.result_0 = call($receiver_0_0, $receiver_1_0, this);
-            if (this.result_0 === COROUTINE_SUSPENDED)
-              return COROUTINE_SUSPENDED;
-            continue;
-          case 1:
-            throw this.exception_0;
-          case 2:
-            var tmp$_0_0;
-            this.state_0 = 3;
-            this.result_0 = this.result_0.receive_jo9acv$(new TypeInfo_init(getKClass(this.local$R_0), call_0.JsType), this);
-            if (this.result_0 === COROUTINE_SUSPENDED)
-              return COROUTINE_SUSPENDED;
-            continue;
-          case 3:
-            this.result_0 = this.local$isR(tmp$_0_0 = this.result_0) ? tmp$_0_0 : throwCCE();
-            this.result_0;
-            return this.result_0;
-          default:this.state_0 = 1;
-            throw new Error('State Machine Unreachable execution');
-        }
-      }
-       catch (e) {
-        if (this.state_0 === 1) {
-          this.exceptionState_0 = this.state_0;
-          throw e;
-        }
-         else {
-          this.state_0 = this.exceptionState_0;
-          this.exception_0 = e;
-        }
-      }
-     while (true);
-  };
-  KtorGraphQLWebClient.prototype.subscription_isi6of$ = function (R_0_0, isR_0, query_0, continuation_0, suspended) {
-    var instance = new Coroutine$subscription_isi6of$(this, R_0_0, isR_0, query_0, continuation_0);
-    if (suspended)
-      return instance;
-    else
-      return instance.doResume(null);
-  };
-  defineInlineFunction('client.com.chrynan.sitetheme.web.KtorGraphQLWebClient.subscription_isi6of$', wrapFunction(function () {
-    var Unit = Kotlin.kotlin.Unit;
-    var takeFrom = _.$$importsForInline$$['ktor-client-core'].$$importsForInline$$['ktor-http'].io.ktor.http.takeFrom_jl1sg7$;
-    var utils = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.utils;
-    var url = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.request.url_3rzbk2$;
-    var HttpMethod = _.$$importsForInline$$['ktor-client-core'].$$importsForInline$$['ktor-http'].io.ktor.http.HttpMethod;
-    var HttpRequestBuilder_init = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.request.HttpRequestBuilder;
-    var call = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.call.call_30bfl5$;
-    var throwCCE = Kotlin.throwCCE;
-    var getKClass = Kotlin.getKClass;
-    var call_0 = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.call;
-    var TypeInfo_init = _.$$importsForInline$$['ktor-client-core'].io.ktor.client.call.TypeInfo;
-    function post$lambda($receiver) {
-      return Unit;
-    }
-    return function (R_0, isR, query, continuation) {
-      var $receiver_0_0 = this.httpClient;
-      var urlString_0 = this.baseUrl + query.toEncodedString();
-      var host_0_0;
-      var body_0_0;
-      host_0_0 = 'localhost';
-      body_0_0 = utils.EmptyContent;
-      var $receiver_1_0 = new HttpRequestBuilder_init();
-      url($receiver_1_0, 'http', host_0_0, 0, '/');
-      $receiver_1_0.method = HttpMethod.Companion.Post;
-      $receiver_1_0.body = body_0_0;
-      takeFrom($receiver_1_0.url, urlString_0);
-      post$lambda($receiver_1_0);
-      Kotlin.suspendCall(call($receiver_0_0, $receiver_1_0, Kotlin.coroutineReceiver()));
-      var tmp$_0_0;
-      Kotlin.suspendCall(Kotlin.coroutineResult(Kotlin.coroutineReceiver()).receive_jo9acv$(new TypeInfo_init(getKClass(R_0), call_0.JsType), Kotlin.coroutineReceiver()));
-      Kotlin.setCoroutineResult(isR(tmp$_0_0 = Kotlin.coroutineResult(Kotlin.coroutineReceiver())) ? tmp$_0_0 : throwCCE(), Kotlin.coroutineReceiver());
-      Kotlin.coroutineResult(Kotlin.coroutineReceiver());
-      return Kotlin.coroutineResult(Kotlin.coroutineReceiver());
-    };
-  }));
-  KtorGraphQLWebClient.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'KtorGraphQLWebClient',
-    interfaces: []
-  };
   var package$com = _.com || (_.com = {});
   var package$chrynan = package$com.chrynan || (package$com.chrynan = {});
   var package$sitetheme = package$chrynan.sitetheme || (package$chrynan.sitetheme = {});
@@ -3579,7 +3367,6 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
   var package$web = package$sitetheme.web || (package$sitetheme.web = {});
   package$web.GraphQLQueryBody = GraphQLQueryBody;
   $$importsForInline$$['ktor-client-core'] = $module$ktor_client_core;
-  package$web.KtorGraphQLWebClient = KtorGraphQLWebClient;
   Object.defineProperty(HeaderFooterPresenter.prototype, 'coroutineContext', Object.getOwnPropertyDescriptor(Presenter.prototype, 'coroutineContext'));
   categoryListItemFragment = lazy(categoryListItemFragment$lambda);
   revisionListItemFragment = lazy(revisionListItemFragment$lambda);
@@ -3589,4 +3376,4 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$ktor_client_c
   main_0();
   Kotlin.defineModule('client', _);
   return _;
-}(typeof client === 'undefined' ? {} : client, kotlin, this['kotlinx-html-js'], this['ktor-client-core'], this['kotlinx-coroutines-core'], this['graphql-query'], common);
+}(typeof client === 'undefined' ? {} : client, kotlin, this['kotlinx-html-js'], this['kotlinx-coroutines-core'], this['graphql-query'], common, this['ktor-client-core'], this['ktor-client-json'], this['ktor-client-logging']);

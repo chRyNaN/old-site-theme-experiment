@@ -24,11 +24,15 @@ class HomePresenter(
 
     fun loadPosts() {
         launch {
+            println("HomePresenter: loadPosts: launch")
+
             view.showProgressBar()
 
             val postViewModelItems = postViewModelRepository.getMostRecentPosts()
 
             val postItems = postRepository.getPostListItemsAfter(first = 10, after = "After Cursor")
+
+            println("HomePresenter: loadPosts: launch: after getPostListItemsAfter() call")
 
             binder.bindPosts(postViewModelItems)
 

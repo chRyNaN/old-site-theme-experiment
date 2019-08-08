@@ -9,9 +9,6 @@ import com.chrynan.sitetheme.source.PostRepositorySource
 import com.chrynan.sitetheme.templates.PostItemTemplate
 import com.chrynan.sitetheme.view.HomeView
 import com.chrynan.sitetheme.viewmodel.PostItemViewModel
-import com.chrynan.sitetheme.web.KtorGraphQLWebClient
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.js.Js
 import kotlinx.html.*
 import kotlinx.html.dom.append
 import kotlin.browser.document
@@ -26,7 +23,7 @@ class HomePage : HeaderFooterPage(),
             this,
             this,
             PostViewModelRepositorySource(),
-            PostRepositorySource(KtorGraphQLWebClient(httpClient = HttpClient(Js), baseUrl = "https://chrynan.codes")),
+            PostRepositorySource(),
             MainNavigationItemRepositorySource(),
             FooterItemRepositorySource()
         )

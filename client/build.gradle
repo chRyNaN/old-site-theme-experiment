@@ -20,6 +20,8 @@ dependencies {
 
     compile "io.ktor:ktor-client-json-js:1.2.1"
 
+    compile "io.ktor:ktor-client-logging-js:1.2.1"
+
     compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.11.0"
 }
 
@@ -56,7 +58,9 @@ task assembleWeb(type: Sync) {
                 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
                 
                 <script defer type="text/javascript" src="../js/kotlin.js"></script>
+                <script defer type="text/javascript" src="../js/kotlin.meta.js"></script>
                 <script defer type="text/javascript" src="../js/kotlinx-io.js"></script>
+                <script defer type="text/javascript" src="../js/kotlinx-io.meta.js"></script>
                 <script defer type="text/javascript" src="../js/kotlinx-coroutines-core.js"></script>
                 <script defer type="text/javascript" src="../js/kotlinx-coroutines-io.js"></script>
                 <script defer type="text/javascript" src="../js/kotlinx-html-js.js"></script>
@@ -67,10 +71,12 @@ task assembleWeb(type: Sync) {
                 <script defer type="text/javascript" src="../js/ktor-client-core.js"></script>
                 <script defer type="text/javascript" src="../js/ktor-client-js.js"></script>
                 <script defer type="text/javascript" src="../js/ktor-client-json.js"></script>
+                <script defer type="text/javascript" src="../js/ktor-client-logging.js"></script>
                 <script defer type="text/javascript" src="../js/kotlinx-atomicfu.js"></script>
                 <script defer type="text/javascript" src="../js/graphql-query.js"></script>
                 <script defer type="text/javascript" src="../js/common.js"></script>
                 <script defer type="text/javascript" src="../js/client.js"></script>
+                <script defer type="text/javascript" src="../js/client.meta.js"></script>
                              
                 <script defer type="text/javascript" src="../js/client.js"></script>
             </head>
