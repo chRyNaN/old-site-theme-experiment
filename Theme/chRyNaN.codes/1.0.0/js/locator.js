@@ -1,7 +1,15 @@
-if (typeof kotlin === 'undefined') {
-  throw new Error("Error loading module 'locator'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'locator'.");
-}
-var locator = function (_, Kotlin) {
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd)
+    define(['exports', 'kotlin'], factory);
+  else if (typeof exports === 'object')
+    factory(module.exports, require('kotlin'));
+  else {
+    if (typeof kotlin === 'undefined') {
+      throw new Error("Error loading module 'locator'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'locator'.");
+    }
+    root.locator = factory(typeof locator === 'undefined' ? {} : locator, kotlin);
+  }
+}(this, function (_, Kotlin) {
   'use strict';
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var defineInlineFunction = Kotlin.defineInlineFunction;
@@ -233,4 +241,6 @@ var locator = function (_, Kotlin) {
   package$locator.ModuleNotInitializedException = ModuleNotInitializedException;
   Kotlin.defineModule('locator', _);
   return _;
-}(typeof locator === 'undefined' ? {} : locator, kotlin);
+}));
+
+//# sourceMappingURL=locator.js.map

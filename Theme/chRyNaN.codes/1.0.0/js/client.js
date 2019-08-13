@@ -30,7 +30,6 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
   var PropertyMetadata = Kotlin.PropertyMetadata;
-  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var LocatesWith = $module$locator.com.chrynan.locator.LocatesWith;
   var Locator_init = $module$locator.com.chrynan.locator.Locator;
@@ -67,6 +66,7 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   var COROUTINE_SUSPENDED = Kotlin.kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED;
   var CoroutineImpl = Kotlin.kotlin.coroutines.CoroutineImpl;
   var launch = $module$kotlinx_coroutines_core.kotlinx.coroutines.launch_s496o7$;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var SupervisorJob = $module$kotlinx_coroutines_core.kotlinx.coroutines.SupervisorJob_5dx9e$;
   var coroutines = $module$kotlinx_coroutines_core.kotlinx.coroutines;
   var CoroutineScope = $module$kotlinx_coroutines_core.kotlinx.coroutines.CoroutineScope;
@@ -217,7 +217,6 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
     }
   });
   SiteApplication.prototype.onStart = function () {
-    println('SiteApplication: onStart: Before attach calls');
     var module_0 = this.module;
     var $receiver = locator.DependencyGraph.modules;
     var key = getKClass(WebModule);
@@ -226,12 +225,15 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
     var $receiver_0 = locator.DependencyGraph.modules;
     var key_0 = getKClass(RepositoryModule);
     $receiver_0.put_xwzc9p$(key_0, module_0_0);
-    var $this = locator.DependencyGraph;
     var module_0_1 = this.module;
+    var $receiver_1 = locator.DependencyGraph.modules;
+    var key_1 = getKClass(NavigatorModule);
+    $receiver_1.put_xwzc9p$(key_1, module_0_1);
+    var $this = locator.DependencyGraph;
+    var module_0_2 = this.module;
     var $receiver_0_0 = $this.modules;
-    var key_1 = getKClass(ApplicationModule);
-    $receiver_0_0.put_xwzc9p$(key_1, module_0_1);
-    println('SiteApplication: onStart: After attach calls');
+    var key_2 = getKClass(ApplicationModule);
+    $receiver_0_0.put_xwzc9p$(key_2, module_0_2);
     this.navigator_0.goTo_inkody$(this.startingPageRetriever_0());
   };
   function SiteApplication_init$lambda() {

@@ -1,7 +1,15 @@
-if (typeof kotlin === 'undefined') {
-  throw new Error("Error loading module 'common'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'common'.");
-}
-var common = function (_, Kotlin) {
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd)
+    define(['exports', 'kotlin'], factory);
+  else if (typeof exports === 'object')
+    factory(module.exports, require('kotlin'));
+  else {
+    if (typeof kotlin === 'undefined') {
+      throw new Error("Error loading module 'common'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'common'.");
+    }
+    root.common = factory(typeof common === 'undefined' ? {} : common, kotlin);
+  }
+}(this, function (_, Kotlin) {
   'use strict';
   var L1 = Kotlin.Long.ONE;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
@@ -660,4 +668,6 @@ var common = function (_, Kotlin) {
   package$repository.PostRepository = PostRepository;
   Kotlin.defineModule('common', _);
   return _;
-}(typeof common === 'undefined' ? {} : common, kotlin);
+}));
+
+//# sourceMappingURL=common.js.map

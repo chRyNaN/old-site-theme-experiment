@@ -1,7 +1,15 @@
-if (typeof kotlin === 'undefined') {
-  throw new Error("Error loading module 'graphql-query'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'graphql-query'.");
-}
-this['graphql-query'] = function (_, Kotlin) {
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd)
+    define(['exports', 'kotlin'], factory);
+  else if (typeof exports === 'object')
+    factory(module.exports, require('kotlin'));
+  else {
+    if (typeof kotlin === 'undefined') {
+      throw new Error("Error loading module 'graphql-query'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'graphql-query'.");
+    }
+    root['graphql-query'] = factory(typeof this['graphql-query'] === 'undefined' ? {} : this['graphql-query'], kotlin);
+  }
+}(this, function (_, Kotlin) {
   'use strict';
   var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
   var Unit = Kotlin.kotlin.Unit;
@@ -541,4 +549,6 @@ this['graphql-query'] = function (_, Kotlin) {
   package$graphqlquerybuilder.ScalarGraphQLQueryFieldBuilder = ScalarGraphQLQueryFieldBuilder;
   Kotlin.defineModule('graphql-query', _);
   return _;
-}(typeof this['graphql-query'] === 'undefined' ? {} : this['graphql-query'], kotlin);
+}));
+
+//# sourceMappingURL=graphql-query.js.map
