@@ -1,11 +1,12 @@
 package com.chrynan.sitetheme.page
 
+import com.chrynan.locator.LocatesWith
+import com.chrynan.locator.attachToDependencyGraph
+import com.chrynan.locator.detachFromDependencyGraph
+import com.chrynan.locator.locate
 import com.chrynan.sitetheme.binder.HomeBinder
-import com.chrynan.sitetheme.presenter.HomePresenter
-import com.chrynan.sitetheme.repository.source.FooterItemRepositorySource
-import com.chrynan.sitetheme.repository.source.MainNavigationItemRepositorySource
-import com.chrynan.sitetheme.repository.source.PostViewModelRepositorySource
-import com.chrynan.sitetheme.source.PostRepositorySource
+import com.chrynan.sitetheme.di.module.HomePageModule
+import com.chrynan.sitetheme.di.module.source.HomePageModuleSource
 import com.chrynan.sitetheme.templates.PostItemTemplate
 import com.chrynan.sitetheme.view.HomeView
 import com.chrynan.sitetheme.viewmodel.PostItemViewModel
@@ -16,18 +17,12 @@ import kotlin.browser.document
 @JsName("HomePage")
 class HomePage : HeaderFooterPage(),
     HomeView,
-    HomeBinder {
+    HomeBinder,
+    LocatesWith<HomePageModule> {
 
-    override val presenter by lazy {
-        HomePresenter(
-            this,
-            this,
-            PostViewModelRepositorySource(),
-            PostRepositorySource(),
-            MainNavigationItemRepositorySource(),
-            FooterItemRepositorySource()
-        )
-    }
+    override val module by lazy { HomePageModuleSource(this) }
+
+    override val presenter by locate { presenter }
 
     private val postTemplate by lazy { PostItemTemplate() }
 
@@ -63,9 +58,17 @@ class HomePage : HeaderFooterPage(),
     override fun onLayoutCreated() {
         super.onLayoutCreated()
 
+        attachToDependencyGraph()
+
         presenter.loadHeader()
         presenter.loadFooter()
         presenter.loadPosts()
+    }
+
+    override fun onLayoutDestroyed() {
+        super.onLayoutDestroyed()
+
+        detachFromDependencyGraph()
     }
 
     override fun showProgressBar() {

@@ -13,6 +13,7 @@ rootProject.name = 'sitetheme'
 include ':client'
 include ':server'
 include ':common'
-include 'graphql-query'
+include ':graphql-query'
+include ':locator'
 
 enableFeaturePreview('GRADLE_METADATA')

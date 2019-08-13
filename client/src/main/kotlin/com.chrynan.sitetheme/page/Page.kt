@@ -8,4 +8,7 @@ abstract class Page {
 
     open fun onLayoutCreated() {
     }
+
+    open fun onLayoutDestroyed() {
+    }
 }

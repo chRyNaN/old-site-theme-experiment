@@ -7,22 +7,8 @@ import com.chrynan.sitetheme.query.query
 import com.chrynan.sitetheme.repository.PostRepository
 import com.chrynan.sitetheme.web.executeWith
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.js.Js
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.logging.DEFAULT
-import io.ktor.client.features.logging.LogLevel
-import io.ktor.client.features.logging.Logger
-import io.ktor.client.features.logging.Logging
 
-class PostRepositorySource : PostRepository {
-
-    private val httpClient = HttpClient(Js) {
-        install(JsonFeature)
-        install(Logging) {
-            logger = Logger.DEFAULT
-            level = LogLevel.ALL
-        }
-    }
+class PostRepositorySource(private val httpClient: HttpClient) : PostRepository {
 
     override suspend fun getPostListItemsAfter(first: Int, after: Cursor): PostListItemConnection {
         val query = query {

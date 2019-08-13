@@ -14,6 +14,7 @@ this['graphql-query'] = function (_, Kotlin) {
   var Enum = Kotlin.kotlin.Enum;
   var throwISE = Kotlin.throwISE;
   var toString = Kotlin.toString;
+  var checkIndexOverflow = Kotlin.kotlin.collections.checkIndexOverflow_za3lpa$;
   GraphQLSubscriptionBuilder.prototype = Object.create(BaseGraphQLQueryBuilder.prototype);
   GraphQLSubscriptionBuilder.prototype.constructor = GraphQLSubscriptionBuilder;
   GraphQLMutationBuilder.prototype = Object.create(BaseGraphQLQueryBuilder.prototype);
@@ -384,19 +385,29 @@ this['graphql-query'] = function (_, Kotlin) {
   }
   ObjectGraphQLQueryFieldBuilder.prototype.build_8be2vx$ = function () {
     var $receiver = StringBuilder_init();
-    var tmp$, tmp$_0;
+    var tmp$;
     $receiver.append_gw00v9$(this.name);
-    tmp$ = this.parameters.iterator();
-    while (tmp$.hasNext()) {
-      var parameter = tmp$.next();
-      $receiver.append_gw00v9$(parameter.name + ' = ' + toString(parameter.value));
+    if (!this.parameters.isEmpty()) {
+      $receiver.append_gw00v9$('(');
+      var tmp$_0, tmp$_0_0;
+      var index = 0;
+      tmp$_0 = this.parameters.iterator();
+      while (tmp$_0.hasNext()) {
+        var item = tmp$_0.next();
+        var index_0 = checkIndexOverflow((tmp$_0_0 = index, index = tmp$_0_0 + 1 | 0, tmp$_0_0));
+        $receiver.append_gw00v9$(item.name + ' = ' + toString(item.value));
+        if (index_0 < (this.parameters.size - 1 | 0)) {
+          $receiver.append_gw00v9$(', ');
+        }
+      }
+      $receiver.append_gw00v9$(')');
     }
     $receiver.append_gw00v9$(' {\n');
     this.objectBuilder.indentLevel_8be2vx$ = this.indentLevel + 1 | 0;
     this.objectFieldBuilder(this.objectBuilder);
     $receiver.append_gw00v9$(this.objectBuilder.build());
-    tmp$_0 = this.indentLevel;
-    for (var i = 0; i < tmp$_0; i++) {
+    tmp$ = this.indentLevel;
+    for (var i = 0; i < tmp$; i++) {
       $receiver.append_gw00v9$('    ');
     }
     $receiver.append_gw00v9$('}\n');
@@ -448,12 +459,21 @@ this['graphql-query'] = function (_, Kotlin) {
   }
   ScalarGraphQLQueryFieldBuilder.prototype.build_8be2vx$ = function () {
     var $receiver = StringBuilder_init();
-    var tmp$;
     $receiver.append_gw00v9$(this.name);
-    tmp$ = this.parameters.iterator();
-    while (tmp$.hasNext()) {
-      var parameter = tmp$.next();
-      $receiver.append_gw00v9$(parameter.name + ' = ' + toString(parameter.value));
+    if (!this.parameters.isEmpty()) {
+      $receiver.append_gw00v9$('(');
+      var tmp$, tmp$_0;
+      var index = 0;
+      tmp$ = this.parameters.iterator();
+      while (tmp$.hasNext()) {
+        var item = tmp$.next();
+        var index_0 = checkIndexOverflow((tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0));
+        $receiver.append_gw00v9$(item.name + ' = ' + toString(item.value));
+        if (index_0 < (this.parameters.size - 1 | 0)) {
+          $receiver.append_gw00v9$(', ');
+        }
+      }
+      $receiver.append_gw00v9$(')');
     }
     $receiver.append_gw00v9$('\n');
     return $receiver.toString();

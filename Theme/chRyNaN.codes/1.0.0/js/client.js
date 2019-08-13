@@ -1,6 +1,18 @@
 if (typeof kotlin === 'undefined') {
   throw new Error("Error loading module 'client'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'client'.");
 }
+if (typeof locator === 'undefined') {
+  throw new Error("Error loading module 'client'. Its dependency 'locator' was not found. Please, check whether 'locator' is loaded prior to 'client'.");
+}
+if (typeof this['ktor-client-core'] === 'undefined') {
+  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-core' was not found. Please, check whether 'ktor-client-core' is loaded prior to 'client'.");
+}
+if (typeof this['ktor-client-json'] === 'undefined') {
+  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-json' was not found. Please, check whether 'ktor-client-json' is loaded prior to 'client'.");
+}
+if (typeof this['ktor-client-logging'] === 'undefined') {
+  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-logging' was not found. Please, check whether 'ktor-client-logging' is loaded prior to 'client'.");
+}
 if (typeof this['kotlinx-html-js'] === 'undefined') {
   throw new Error("Error loading module 'client'. Its dependency 'kotlinx-html-js' was not found. Please, check whether 'kotlinx-html-js' is loaded prior to 'client'.");
 }
@@ -13,24 +25,28 @@ if (typeof this['graphql-query'] === 'undefined') {
 if (typeof common === 'undefined') {
   throw new Error("Error loading module 'client'. Its dependency 'common' was not found. Please, check whether 'common' is loaded prior to 'client'.");
 }
-if (typeof this['ktor-client-core'] === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-core' was not found. Please, check whether 'ktor-client-core' is loaded prior to 'client'.");
-}
-if (typeof this['ktor-client-json'] === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-json' was not found. Please, check whether 'ktor-client-json' is loaded prior to 'client'.");
-}
-if (typeof this['ktor-client-logging'] === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-logging' was not found. Please, check whether 'ktor-client-logging' is loaded prior to 'client'.");
-}
-var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_coroutines_core, $module$graphql_query, $module$common, $module$ktor_client_core, $module$ktor_client_json, $module$ktor_client_logging) {
+var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $module$ktor_client_json, $module$ktor_client_logging, $module$kotlinx_html_js, $module$kotlinx_coroutines_core, $module$graphql_query, $module$common) {
   'use strict';
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
-  var Unit = Kotlin.kotlin.Unit;
-  var get_create = $module$kotlinx_html_js.kotlinx.html.dom.get_create_4wc2mh$;
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
-  var append = $module$kotlinx_html_js.kotlinx.html.dom.append_k9bwru$;
-  var lazy = Kotlin.kotlin.lazy_klfg04$;
+  var Unit = Kotlin.kotlin.Unit;
   var Kind_CLASS = Kotlin.Kind.CLASS;
+  var LocatesWith = $module$locator.com.chrynan.locator.LocatesWith;
+  var locator = $module$locator.com.chrynan.locator;
+  var getKClass = Kotlin.getKClass;
+  var Module = $module$locator.com.chrynan.locator.Module;
+  var lazy = Kotlin.kotlin.lazy_klfg04$;
+  var ModuleNotInitializedException_init = $module$locator.com.chrynan.locator.ModuleNotInitializedException;
+  var ModuleClassCastException_init = $module$locator.com.chrynan.locator.ModuleClassCastException;
+  var js = $module$ktor_client_core.io.ktor.client.engine.js;
+  var JsonFeature = $module$ktor_client_json.io.ktor.client.features.json.JsonFeature;
+  var Logging = $module$ktor_client_logging.io.ktor.client.features.logging.Logging;
+  var Logger = $module$ktor_client_logging.io.ktor.client.features.logging.Logger;
+  var get_DEFAULT = $module$ktor_client_logging.io.ktor.client.features.logging.get_DEFAULT_3z44iy$;
+  var LogLevel = $module$ktor_client_logging.io.ktor.client.features.logging.LogLevel;
+  var HttpClient = $module$ktor_client_core.io.ktor.client.HttpClient_744i18$;
+  var append = $module$kotlinx_html_js.kotlinx.html.dom.append_k9bwru$;
+  var PropertyMetadata = Kotlin.PropertyMetadata;
   var set_id = $module$kotlinx_html_js.kotlinx.html.set_id_ueiko3$;
   var div = $module$kotlinx_html_js.kotlinx.html.div_ri36nr$;
   var setOf = Kotlin.kotlin.collections.setOf_i5x0yv$;
@@ -39,6 +55,7 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   var trimIndent = Kotlin.kotlin.text.trimIndent_pdl1vz$;
   var set_style = $module$kotlinx_html_js.kotlinx.html.set_style_ueiko3$;
   var div_0 = $module$kotlinx_html_js.kotlinx.html.div_59el9d$;
+  var Locator_init = $module$locator.com.chrynan.locator.Locator;
   var h1 = $module$kotlinx_html_js.kotlinx.html.h1_vmej1w$;
   var header = $module$kotlinx_html_js.kotlinx.html.header_8btlf7$;
   var main = $module$kotlinx_html_js.kotlinx.html.main_m1e3ev$;
@@ -50,7 +67,6 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   var SupervisorJob = $module$kotlinx_coroutines_core.kotlinx.coroutines.SupervisorJob_5dx9e$;
   var coroutines = $module$kotlinx_coroutines_core.kotlinx.coroutines;
   var CoroutineScope = $module$kotlinx_coroutines_core.kotlinx.coroutines.CoroutineScope;
-  var PropertyMetadata = Kotlin.PropertyMetadata;
   var GraphQLQueryBuilder = $module$graphql_query.com.chrynan.graphqlquerybuilder.GraphQLQueryBuilder;
   var BaseGraphQLQueryBuilder$gqlScalar = $module$graphql_query.com.chrynan.graphqlquerybuilder.BaseGraphQLQueryBuilder.gqlScalar;
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
@@ -61,13 +77,6 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   var fragment = $module$graphql_query.com.chrynan.graphqlquerybuilder.fragment_p31hh$;
   var rangeTo = $module$graphql_query.com.chrynan.graphqlquerybuilder.rangeTo_pshcop$;
   var PostListItemConnection = $module$common.com.chrynan.sitetheme.model.PostListItemConnection;
-  var js = $module$ktor_client_core.io.ktor.client.engine.js;
-  var JsonFeature = $module$ktor_client_json.io.ktor.client.features.json.JsonFeature;
-  var Logging = $module$ktor_client_logging.io.ktor.client.features.logging.Logging;
-  var Logger = $module$ktor_client_logging.io.ktor.client.features.logging.Logger;
-  var get_DEFAULT = $module$ktor_client_logging.io.ktor.client.features.logging.get_DEFAULT_3z44iy$;
-  var LogLevel = $module$ktor_client_logging.io.ktor.client.features.logging.LogLevel;
-  var HttpClient = $module$ktor_client_core.io.ktor.client.HttpClient_744i18$;
   var PostRepository = $module$common.com.chrynan.sitetheme.repository.PostRepository;
   var header_0 = $module$ktor_client_core.io.ktor.client.request.header_xadl6p$;
   var takeFrom = $module$ktor_client_core.$$importsForInline$$['ktor-http'].io.ktor.http.takeFrom_jl1sg7$;
@@ -77,7 +86,6 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   var HttpRequestBuilder_init = $module$ktor_client_core.io.ktor.client.request.HttpRequestBuilder;
   var call = $module$ktor_client_core.io.ktor.client.call.call_30bfl5$;
   var throwCCE = Kotlin.throwCCE;
-  var getKClass = Kotlin.getKClass;
   var call_0 = $module$ktor_client_core.io.ktor.client.call;
   var TypeInfo_init = $module$ktor_client_core.io.ktor.client.call.TypeInfo;
   var InputType = $module$kotlinx_html_js.kotlinx.html.InputType;
@@ -96,6 +104,7 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   var span = $module$kotlinx_html_js.kotlinx.html.span_6djfml$;
   var nav = $module$kotlinx_html_js.kotlinx.html.nav_19d8h1$;
   var header_1 = $module$kotlinx_html_js.kotlinx.html.header_dwfinh$;
+  var get_create = $module$kotlinx_html_js.kotlinx.html.dom.get_create_4wc2mh$;
   var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
   var defineInlineFunction = Kotlin.defineInlineFunction;
   var wrapFunction = Kotlin.wrapFunction;
@@ -173,20 +182,47 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   UserQueryBuilder.prototype.constructor = UserQueryBuilder;
   WPPageInfoQueryBuilder.prototype = Object.create(GraphQLQueryBuilder.prototype);
   WPPageInfoQueryBuilder.prototype.constructor = WPPageInfoQueryBuilder;
-  function main$lambda(it) {
+  function Application() {
+  }
+  Application.$metadata$ = {
+    kind: Kind_INTERFACE,
+    simpleName: 'Application',
+    interfaces: []
+  };
+  function main$lambda(closure$application) {
+    return function (it) {
+      closure$application.onStart();
+      return Unit;
+    };
+  }
+  function main_0() {
+    var application = new SiteApplication();
+    window.onload = main$lambda(application);
+  }
+  function SiteApplication() {
+    this.module_utpevl$_0 = new ApplicationModuleSource();
+  }
+  Object.defineProperty(SiteApplication.prototype, 'module', {
+    get: function () {
+      return this.module_utpevl$_0;
+    }
+  });
+  SiteApplication.prototype.onStart = function () {
     var tmp$;
+    var $this = locator.DependencyGraph;
+    var module_0 = this.module;
+    var $receiver_0 = $this.modules;
+    var key = getKClass(ApplicationModule);
+    $receiver_0.put_xwzc9p$(key, module_0);
     var page = new HomePage();
     (tmp$ = document.body) != null ? (appendPage(tmp$, page), Unit) : null;
     page.onLayoutCreated();
-    return Unit;
-  }
-  function main_0() {
-    window.onload = main$lambda;
-  }
-  function appendPage($receiver, page) {
-    var node = page.onCreateLayout_3mrk8e$(get_create(document));
-    $receiver.appendChild(node);
-  }
+  };
+  SiteApplication.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'SiteApplication',
+    interfaces: [LocatesWith, Application]
+  };
   function HeaderFooterBinder() {
   }
   HeaderFooterBinder.$metadata$ = {
@@ -207,6 +243,159 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
     kind: Kind_INTERFACE,
     simpleName: 'NotFoundBinder',
     interfaces: [HeaderFooterBinder]
+  };
+  function ApplicationModule() {
+  }
+  ApplicationModule.$metadata$ = {
+    kind: Kind_INTERFACE,
+    simpleName: 'ApplicationModule',
+    interfaces: [RepositoryModule, WebModule, Module]
+  };
+  function HomePageModule() {
+  }
+  HomePageModule.$metadata$ = {
+    kind: Kind_INTERFACE,
+    simpleName: 'HomePageModule',
+    interfaces: [Module]
+  };
+  function RepositoryModule() {
+  }
+  RepositoryModule.$metadata$ = {
+    kind: Kind_INTERFACE,
+    simpleName: 'RepositoryModule',
+    interfaces: [Module]
+  };
+  function WebModule() {
+  }
+  WebModule.$metadata$ = {
+    kind: Kind_INTERFACE,
+    simpleName: 'WebModule',
+    interfaces: [Module]
+  };
+  function ApplicationModuleSource() {
+    this.$delegate_o1fvkb$_0 = new WebModuleSource();
+    this.$delegate_o1fvkb$_1 = new RepositoryModuleSource();
+  }
+  Object.defineProperty(ApplicationModuleSource.prototype, 'httpClient', {
+    get: function () {
+      return this.$delegate_o1fvkb$_0.httpClient;
+    }
+  });
+  Object.defineProperty(ApplicationModuleSource.prototype, 'postRepository', {
+    get: function () {
+      return this.$delegate_o1fvkb$_1.postRepository;
+    }
+  });
+  ApplicationModuleSource.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'ApplicationModuleSource',
+    interfaces: [ApplicationModule, RepositoryModule, WebModule]
+  };
+  function HomePageModuleSource(page) {
+    var tmp$, tmp$_0, tmp$_1;
+    tmp$ = locator.DependencyGraph.modules.get_11rb$(getKClass(RepositoryModule));
+    if (tmp$ == null) {
+      throw new ModuleNotInitializedException_init('Module not found for KClass = ' + getKClass(RepositoryModule));
+    }
+    var module_0 = tmp$;
+    tmp$_1 = Kotlin.isType(tmp$_0 = module_0, RepositoryModule) ? tmp$_0 : null;
+    if (tmp$_1 == null) {
+      throw new ModuleClassCastException_init(getKClass(RepositoryModule));
+    }
+    this.$delegate_kbhe4p$_0 = tmp$_1;
+    this.view_u8bfsu$_0 = page;
+    this.binder_8wk4iv$_0 = page;
+    this.presenter_u9xtpl$_0 = lazy(HomePageModuleSource$presenter$lambda(this));
+  }
+  Object.defineProperty(HomePageModuleSource.prototype, 'view', {
+    get: function () {
+      return this.view_u8bfsu$_0;
+    }
+  });
+  Object.defineProperty(HomePageModuleSource.prototype, 'binder', {
+    get: function () {
+      return this.binder_8wk4iv$_0;
+    }
+  });
+  Object.defineProperty(HomePageModuleSource.prototype, 'presenter', {
+    get: function () {
+      return this.presenter_u9xtpl$_0.value;
+    }
+  });
+  Object.defineProperty(HomePageModuleSource.prototype, 'postRepository', {
+    get: function () {
+      return this.$delegate_kbhe4p$_0.postRepository;
+    }
+  });
+  function HomePageModuleSource$presenter$lambda(this$HomePageModuleSource) {
+    return function () {
+      return new HomePresenter(this$HomePageModuleSource.view, this$HomePageModuleSource.binder, new PostViewModelRepositorySource(), this$HomePageModuleSource.postRepository, new MainNavigationItemRepositorySource(), new FooterItemRepositorySource());
+    };
+  }
+  HomePageModuleSource.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'HomePageModuleSource',
+    interfaces: [RepositoryModule, HomePageModule]
+  };
+  function RepositoryModuleSource() {
+    var tmp$, tmp$_0, tmp$_1;
+    tmp$ = locator.DependencyGraph.modules.get_11rb$(getKClass(WebModule));
+    if (tmp$ == null) {
+      throw new ModuleNotInitializedException_init('Module not found for KClass = ' + getKClass(WebModule));
+    }
+    var module_0 = tmp$;
+    tmp$_1 = Kotlin.isType(tmp$_0 = module_0, WebModule) ? tmp$_0 : null;
+    if (tmp$_1 == null) {
+      throw new ModuleClassCastException_init(getKClass(WebModule));
+    }
+    this.$delegate_glff8z$_0 = tmp$_1;
+    this.postRepository_bd9iff$_0 = lazy(RepositoryModuleSource$postRepository$lambda(this));
+  }
+  Object.defineProperty(RepositoryModuleSource.prototype, 'postRepository', {
+    get: function () {
+      return this.postRepository_bd9iff$_0.value;
+    }
+  });
+  Object.defineProperty(RepositoryModuleSource.prototype, 'httpClient', {
+    get: function () {
+      return this.$delegate_glff8z$_0.httpClient;
+    }
+  });
+  function RepositoryModuleSource$postRepository$lambda(this$RepositoryModuleSource) {
+    return function () {
+      return new PostRepositorySource(this$RepositoryModuleSource.httpClient);
+    };
+  }
+  RepositoryModuleSource.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'RepositoryModuleSource',
+    interfaces: [WebModule, RepositoryModule]
+  };
+  function WebModuleSource() {
+    this.httpClient_6m1vsi$_0 = lazy(WebModuleSource$httpClient$lambda);
+  }
+  Object.defineProperty(WebModuleSource.prototype, 'httpClient', {
+    get: function () {
+      return this.httpClient_6m1vsi$_0.value;
+    }
+  });
+  function WebModuleSource$httpClient$lambda$lambda$lambda($receiver) {
+    $receiver.logger = get_DEFAULT(Logger.Companion);
+    $receiver.level = LogLevel.ALL;
+    return Unit;
+  }
+  function WebModuleSource$httpClient$lambda$lambda($receiver) {
+    $receiver.install_xlxg29$(JsonFeature.Feature);
+    $receiver.install_xlxg29$(Logging.Companion, WebModuleSource$httpClient$lambda$lambda$lambda);
+    return Unit;
+  }
+  function WebModuleSource$httpClient$lambda() {
+    return HttpClient(js.Js, WebModuleSource$httpClient$lambda$lambda);
+  }
+  WebModuleSource.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'WebModuleSource',
+    interfaces: [WebModule]
   };
   function Mapper() {
   }
@@ -299,14 +488,21 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   };
   function HomePage() {
     HeaderFooterPage.call(this);
-    this.presenter_k0myc5$_0 = lazy(HomePage$presenter$lambda(this));
+    this.module_u18zsb$_0 = lazy(HomePage$module$lambda(this));
+    this.presenter_k0myc5$_0 = new Locator_init(HomePage$presenter$lambda, this.module);
     this.postTemplate_xm09kp$_0 = lazy(HomePage$postTemplate$lambda);
     this.postContainer_4ck84y$_0 = lazy(HomePage$postContainer$lambda);
     this.progressBar_cmlr1p$_0 = lazy(HomePage$progressBar$lambda);
   }
+  Object.defineProperty(HomePage.prototype, 'module', {
+    get: function () {
+      return this.module_u18zsb$_0.value;
+    }
+  });
+  var HomePage$presenter_metadata = new PropertyMetadata('presenter');
   Object.defineProperty(HomePage.prototype, 'presenter', {
     get: function () {
-      return this.presenter_k0myc5$_0.value;
+      return this.presenter_k0myc5$_0.getValue_lrcp0p$(this, HomePage$presenter_metadata);
     }
   });
   Object.defineProperty(HomePage.prototype, 'postTemplate_0', {
@@ -366,9 +562,18 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   };
   HomePage.prototype.onLayoutCreated = function () {
     HeaderFooterPage.prototype.onLayoutCreated.call(this);
+    var $this = locator.DependencyGraph;
+    var module_0 = this.module;
+    var $receiver_0 = $this.modules;
+    var key = getKClass(HomePageModule);
+    $receiver_0.put_xwzc9p$(key, module_0);
     this.presenter.loadHeader();
     this.presenter.loadFooter();
     this.presenter.loadPosts();
+  };
+  HomePage.prototype.onLayoutDestroyed = function () {
+    HeaderFooterPage.prototype.onLayoutDestroyed.call(this);
+    locator.DependencyGraph.modules.remove_11rb$(getKClass(HomePageModule));
   };
   HomePage.prototype.showProgressBar = function () {
     var tmp$, tmp$_0;
@@ -394,10 +599,13 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
     var tmp$;
     (tmp$ = this.postContainer_0) != null ? append(tmp$, HomePage$bindPosts$lambda(this, models)) : null;
   };
-  function HomePage$presenter$lambda(this$HomePage) {
+  function HomePage$module$lambda(this$HomePage) {
     return function () {
-      return new HomePresenter(this$HomePage, this$HomePage, new PostViewModelRepositorySource(), new PostRepositorySource(), new MainNavigationItemRepositorySource(), new FooterItemRepositorySource());
+      return new HomePageModuleSource(this$HomePage);
     };
+  }
+  function HomePage$presenter$lambda($receiver) {
+    return $receiver.presenter;
   }
   function HomePage$postTemplate$lambda() {
     return new PostItemTemplate();
@@ -411,7 +619,7 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   HomePage.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'HomePage',
-    interfaces: [HomeBinder, HomeView, HeaderFooterPage]
+    interfaces: [LocatesWith, HomeBinder, HomeView, HeaderFooterPage]
   };
   function NotFoundPage() {
     HeaderFooterPage.call(this);
@@ -476,6 +684,8 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   function Page() {
   }
   Page.prototype.onLayoutCreated = function () {
+  };
+  Page.prototype.onLayoutDestroyed = function () {
   };
   Page.$metadata$ = {
     kind: Kind_CLASS,
@@ -2358,8 +2568,8 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
       return Unit;
     };
   }
-  function PostRepositorySource() {
-    this.httpClient_0 = HttpClient(js.Js, PostRepositorySource$httpClient$lambda);
+  function PostRepositorySource(httpClient) {
+    this.httpClient_0 = httpClient;
   }
   function PostRepositorySource$getPostListItemsAfter$lambda$lambda$lambda($receiver) {
     rangeTo($receiver, get_pageInfoFragment());
@@ -2568,16 +2778,6 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
     else
       return instance.doResume(null);
   };
-  function PostRepositorySource$httpClient$lambda$lambda($receiver) {
-    $receiver.logger = get_DEFAULT(Logger.Companion);
-    $receiver.level = LogLevel.ALL;
-    return Unit;
-  }
-  function PostRepositorySource$httpClient$lambda($receiver) {
-    $receiver.install_xlxg29$(JsonFeature.Feature);
-    $receiver.install_xlxg29$(Logging.Companion, PostRepositorySource$httpClient$lambda$lambda);
-    return Unit;
-  }
   PostRepositorySource.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'PostRepositorySource',
@@ -2924,6 +3124,10 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
     simpleName: 'TopNavbarTemplate',
     interfaces: [Template]
   };
+  function appendPage($receiver, page) {
+    var node = page.onCreateLayout_3mrk8e$(get_create(document));
+    $receiver.appendChild(node);
+  }
   function HeaderFooterView() {
   }
   HeaderFooterView.$metadata$ = {
@@ -3269,12 +3473,25 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   var package$com = _.com || (_.com = {});
   var package$chrynan = package$com.chrynan || (package$com.chrynan = {});
   var package$sitetheme = package$chrynan.sitetheme || (package$chrynan.sitetheme = {});
+  package$sitetheme.Application = Application;
   package$sitetheme.main = main_0;
-  package$sitetheme.appendPage_adiukm$ = appendPage;
+  $$importsForInline$$.locator = $module$locator;
+  package$sitetheme.SiteApplication = SiteApplication;
   var package$binder = package$sitetheme.binder || (package$sitetheme.binder = {});
   package$binder.HeaderFooterBinder = HeaderFooterBinder;
   package$binder.HomeBinder = HomeBinder;
   package$binder.NotFoundBinder = NotFoundBinder;
+  var package$di = package$sitetheme.di || (package$sitetheme.di = {});
+  var package$module = package$di.module || (package$di.module = {});
+  package$module.ApplicationModule = ApplicationModule;
+  package$module.HomePageModule = HomePageModule;
+  package$module.RepositoryModule = RepositoryModule;
+  package$module.WebModule = WebModule;
+  var package$source = package$module.source || (package$module.source = {});
+  package$source.ApplicationModuleSource = ApplicationModuleSource;
+  package$source.HomePageModuleSource = HomePageModuleSource;
+  package$source.RepositoryModuleSource = RepositoryModuleSource;
+  package$source.WebModuleSource = WebModuleSource;
   var package$mapper = package$sitetheme.mapper || (package$sitetheme.mapper = {});
   package$mapper.Mapper = Mapper;
   var package$page = package$sitetheme.page || (package$sitetheme.page = {});
@@ -3325,34 +3542,36 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   package$repository.FooterItemRepository = FooterItemRepository;
   package$repository.MainNavigationItemRepository = MainNavigationItemRepository;
   package$repository.PostViewModelRepository = PostViewModelRepository;
-  var package$source = package$repository.source || (package$repository.source = {});
-  package$source.FooterItemRepositorySource = FooterItemRepositorySource;
-  package$source.MainNavigationItemRepositorySource = MainNavigationItemRepositorySource;
-  package$source.PostViewModelRepositorySource = PostViewModelRepositorySource;
-  var package$source_0 = package$sitetheme.source || (package$sitetheme.source = {});
-  Object.defineProperty(package$source_0, 'categoryListItemFragment', {
+  var package$source_0 = package$repository.source || (package$repository.source = {});
+  package$source_0.FooterItemRepositorySource = FooterItemRepositorySource;
+  package$source_0.MainNavigationItemRepositorySource = MainNavigationItemRepositorySource;
+  package$source_0.PostViewModelRepositorySource = PostViewModelRepositorySource;
+  var package$source_1 = package$sitetheme.source || (package$sitetheme.source = {});
+  Object.defineProperty(package$source_1, 'categoryListItemFragment', {
     get: get_categoryListItemFragment
   });
-  Object.defineProperty(package$source_0, 'revisionListItemFragment', {
+  Object.defineProperty(package$source_1, 'revisionListItemFragment', {
     get: get_revisionListItemFragment
   });
-  Object.defineProperty(package$source_0, 'tagListItemFragment', {
+  Object.defineProperty(package$source_1, 'tagListItemFragment', {
     get: get_tagListItemFragment
   });
-  Object.defineProperty(package$source_0, 'postListItemFragment', {
+  Object.defineProperty(package$source_1, 'postListItemFragment', {
     get: get_postListItemFragment
   });
-  Object.defineProperty(package$source_0, 'pageInfoFragment', {
+  Object.defineProperty(package$source_1, 'pageInfoFragment', {
     get: get_pageInfoFragment
   });
   $$importsForInline$$.client = _;
-  package$source_0.PostRepositorySource = PostRepositorySource;
+  package$source_1.PostRepositorySource = PostRepositorySource;
   var package$templates = package$sitetheme.templates || (package$sitetheme.templates = {});
   package$templates.FooterTemplate = FooterTemplate;
   package$templates.HomeTemplate = HomeTemplate;
   package$templates.PostItemTemplate = PostItemTemplate;
   package$templates.Template = Template;
   package$templates.TopNavbarTemplate = TopNavbarTemplate;
+  var package$utils = package$sitetheme.utils || (package$sitetheme.utils = {});
+  package$utils.appendPage_adiukm$ = appendPage;
   var package$view = package$sitetheme.view || (package$sitetheme.view = {});
   package$view.HeaderFooterView = HeaderFooterView;
   package$view.HomeView = HomeView;
@@ -3376,4 +3595,4 @@ var client = function (_, Kotlin, $module$kotlinx_html_js, $module$kotlinx_corou
   main_0();
   Kotlin.defineModule('client', _);
   return _;
-}(typeof client === 'undefined' ? {} : client, kotlin, this['kotlinx-html-js'], this['kotlinx-coroutines-core'], this['graphql-query'], common, this['ktor-client-core'], this['ktor-client-json'], this['ktor-client-logging']);
+}(typeof client === 'undefined' ? {} : client, kotlin, locator, this['ktor-client-core'], this['ktor-client-json'], this['ktor-client-logging'], this['kotlinx-html-js'], this['kotlinx-coroutines-core'], this['graphql-query'], common);
