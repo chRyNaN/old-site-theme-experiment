@@ -30,8 +30,10 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
   var Unit = Kotlin.kotlin.Unit;
+  var PropertyMetadata = Kotlin.PropertyMetadata;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var LocatesWith = $module$locator.com.chrynan.locator.LocatesWith;
+  var Locator_init = $module$locator.com.chrynan.locator.Locator;
   var locator = $module$locator.com.chrynan.locator;
   var getKClass = Kotlin.getKClass;
   var Module = $module$locator.com.chrynan.locator.Module;
@@ -45,8 +47,10 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   var get_DEFAULT = $module$ktor_client_logging.io.ktor.client.features.logging.get_DEFAULT_3z44iy$;
   var LogLevel = $module$ktor_client_logging.io.ktor.client.features.logging.LogLevel;
   var HttpClient = $module$ktor_client_core.io.ktor.client.HttpClient_744i18$;
+  var clear = Kotlin.kotlin.dom.clear_asww5s$;
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
+  var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var append = $module$kotlinx_html_js.kotlinx.html.dom.append_k9bwru$;
-  var PropertyMetadata = Kotlin.PropertyMetadata;
   var set_id = $module$kotlinx_html_js.kotlinx.html.set_id_ueiko3$;
   var div = $module$kotlinx_html_js.kotlinx.html.div_ri36nr$;
   var setOf = Kotlin.kotlin.collections.setOf_i5x0yv$;
@@ -55,7 +59,6 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   var trimIndent = Kotlin.kotlin.text.trimIndent_pdl1vz$;
   var set_style = $module$kotlinx_html_js.kotlinx.html.set_style_ueiko3$;
   var div_0 = $module$kotlinx_html_js.kotlinx.html.div_59el9d$;
-  var Locator_init = $module$locator.com.chrynan.locator.Locator;
   var h1 = $module$kotlinx_html_js.kotlinx.html.h1_vmej1w$;
   var header = $module$kotlinx_html_js.kotlinx.html.header_8btlf7$;
   var main = $module$kotlinx_html_js.kotlinx.html.main_m1e3ev$;
@@ -196,28 +199,38 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
     };
   }
   function main_0() {
-    var application = new SiteApplication();
+    var application = new SiteApplication(new HomePage());
     window.onload = main$lambda(application);
   }
-  function SiteApplication() {
+  function SiteApplication(startingPage) {
+    if (startingPage === void 0)
+      startingPage = new HomePage();
+    this.startingPage_0 = startingPage;
     this.module_utpevl$_0 = new ApplicationModuleSource();
+    this.navigator_whzs0$_0 = new Locator_init(SiteApplication$navigator$lambda, this.module);
   }
   Object.defineProperty(SiteApplication.prototype, 'module', {
     get: function () {
       return this.module_utpevl$_0;
     }
   });
+  var SiteApplication$navigator_metadata = new PropertyMetadata('navigator');
+  Object.defineProperty(SiteApplication.prototype, 'navigator_0', {
+    get: function () {
+      return this.navigator_whzs0$_0.getValue_lrcp0p$(this, SiteApplication$navigator_metadata);
+    }
+  });
   SiteApplication.prototype.onStart = function () {
-    var tmp$;
     var $this = locator.DependencyGraph;
     var module_0 = this.module;
     var $receiver_0 = $this.modules;
     var key = getKClass(ApplicationModule);
     $receiver_0.put_xwzc9p$(key, module_0);
-    var page = new HomePage();
-    (tmp$ = document.body) != null ? (appendPage(tmp$, page), Unit) : null;
-    page.onLayoutCreated();
+    this.navigator_0.goTo_inkody$(this.startingPage_0);
   };
+  function SiteApplication$navigator$lambda($receiver) {
+    return $receiver.navigator;
+  }
   SiteApplication.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'SiteApplication',
@@ -249,13 +262,20 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   ApplicationModule.$metadata$ = {
     kind: Kind_INTERFACE,
     simpleName: 'ApplicationModule',
-    interfaces: [RepositoryModule, WebModule, Module]
+    interfaces: [NavigatorModule, RepositoryModule, WebModule, Module]
   };
   function HomePageModule() {
   }
   HomePageModule.$metadata$ = {
     kind: Kind_INTERFACE,
     simpleName: 'HomePageModule',
+    interfaces: [Module]
+  };
+  function NavigatorModule() {
+  }
+  NavigatorModule.$metadata$ = {
+    kind: Kind_INTERFACE,
+    simpleName: 'NavigatorModule',
     interfaces: [Module]
   };
   function RepositoryModule() {
@@ -275,6 +295,7 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   function ApplicationModuleSource() {
     this.$delegate_o1fvkb$_0 = new WebModuleSource();
     this.$delegate_o1fvkb$_1 = new RepositoryModuleSource();
+    this.$delegate_o1fvkb$_2 = new NavigatorModuleSource();
   }
   Object.defineProperty(ApplicationModuleSource.prototype, 'httpClient', {
     get: function () {
@@ -286,10 +307,15 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
       return this.$delegate_o1fvkb$_1.postRepository;
     }
   });
+  Object.defineProperty(ApplicationModuleSource.prototype, 'navigator', {
+    get: function () {
+      return this.$delegate_o1fvkb$_2.navigator;
+    }
+  });
   ApplicationModuleSource.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'ApplicationModuleSource',
-    interfaces: [ApplicationModule, RepositoryModule, WebModule]
+    interfaces: [ApplicationModule, NavigatorModule, RepositoryModule, WebModule]
   };
   function HomePageModuleSource(page) {
     var tmp$, tmp$_0, tmp$_1;
@@ -336,6 +362,19 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
     kind: Kind_CLASS,
     simpleName: 'HomePageModuleSource',
     interfaces: [RepositoryModule, HomePageModule]
+  };
+  function NavigatorModuleSource() {
+    this.navigator_pztenp$_0 = new NavigatorSource();
+  }
+  Object.defineProperty(NavigatorModuleSource.prototype, 'navigator', {
+    get: function () {
+      return this.navigator_pztenp$_0;
+    }
+  });
+  NavigatorModuleSource.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'NavigatorModuleSource',
+    interfaces: [NavigatorModule]
   };
   function RepositoryModuleSource() {
     var tmp$, tmp$_0, tmp$_1;
@@ -404,6 +443,70 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
     simpleName: 'Mapper',
     interfaces: []
   };
+  function Navigator() {
+  }
+  Navigator.$metadata$ = {
+    kind: Kind_INTERFACE,
+    simpleName: 'Navigator',
+    interfaces: []
+  };
+  function NavigatorSource(containerId) {
+    if (containerId === void 0)
+      containerId = 'container-id';
+    this.containerId_0 = containerId;
+    this.stack_0 = ArrayList_init();
+    this.currentPage_0 = null;
+  }
+  Object.defineProperty(NavigatorSource.prototype, 'containerElement_0', {
+    get: function () {
+      return document.body;
+    }
+  });
+  NavigatorSource.prototype.goTo_inkody$ = function (page) {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
+    (tmp$ = this.currentPage_0) != null ? (tmp$.onDestroyLayout(), Unit) : null;
+    (tmp$_0 = this.containerElement_0) != null ? (clear(tmp$_0), Unit) : null;
+    (tmp$_1 = this.currentPage_0) != null ? (tmp$_1.onLayoutDestroyed(), Unit) : null;
+    if ((tmp$_2 = this.currentPage_0) != null) {
+      this.stack_0.add_11rb$(tmp$_2);
+    }
+    this.currentPage_0 = page;
+    (tmp$_3 = this.containerElement_0) != null ? (appendPage(tmp$_3, page), Unit) : null;
+    page.onLayoutCreated();
+  };
+  NavigatorSource.prototype.goBack = function () {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
+    (tmp$ = this.currentPage_0) != null ? (tmp$.onDestroyLayout(), Unit) : null;
+    (tmp$_0 = this.containerElement_0) != null ? (clear(tmp$_0), Unit) : null;
+    (tmp$_1 = this.currentPage_0) != null ? (tmp$_1.onLayoutDestroyed(), Unit) : null;
+    this.currentPage_0 = !this.stack_0.isEmpty() ? this.stack_0.removeAt_za3lpa$(this.stack_0.size - 1 | 0) : null;
+    if ((tmp$_2 = this.currentPage_0) != null) {
+      var tmp$_4;
+      (tmp$_4 = this.containerElement_0) != null && (appendPage(tmp$_4, tmp$_2), Unit);
+    }
+    (tmp$_3 = this.currentPage_0) != null ? (tmp$_3.onLayoutCreated(), Unit) : null;
+  };
+  NavigatorSource.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'NavigatorSource',
+    interfaces: [Navigator]
+  };
+  function NavigatorURIs() {
+    NavigatorURIs_instance = this;
+  }
+  NavigatorURIs.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'NavigatorURIs',
+    interfaces: []
+  };
+  var NavigatorURIs_instance = null;
+  function NavigatorURIs_getInstance() {
+    if (NavigatorURIs_instance === null) {
+      new NavigatorURIs();
+    }
+    return NavigatorURIs_instance;
+  }
+  var navigator;
   function HeaderFooterPage() {
     Page.call(this);
     this.headerContainerId_rfyo91$_0 = 'headerContainer';
@@ -684,6 +787,8 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   function Page() {
   }
   Page.prototype.onLayoutCreated = function () {
+  };
+  Page.prototype.onDestroyLayout = function () {
   };
   Page.prototype.onLayoutDestroyed = function () {
   };
@@ -3485,15 +3590,28 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   var package$module = package$di.module || (package$di.module = {});
   package$module.ApplicationModule = ApplicationModule;
   package$module.HomePageModule = HomePageModule;
+  package$module.NavigatorModule = NavigatorModule;
   package$module.RepositoryModule = RepositoryModule;
   package$module.WebModule = WebModule;
   var package$source = package$module.source || (package$module.source = {});
   package$source.ApplicationModuleSource = ApplicationModuleSource;
   package$source.HomePageModuleSource = HomePageModuleSource;
+  package$source.NavigatorModuleSource = NavigatorModuleSource;
   package$source.RepositoryModuleSource = RepositoryModuleSource;
   package$source.WebModuleSource = WebModuleSource;
   var package$mapper = package$sitetheme.mapper || (package$sitetheme.mapper = {});
   package$mapper.Mapper = Mapper;
+  var package$navigator = package$sitetheme.navigator || (package$sitetheme.navigator = {});
+  package$navigator.Navigator = Navigator;
+  package$navigator.NavigatorSource = NavigatorSource;
+  Object.defineProperty(package$navigator, 'NavigatorURIs', {
+    get: NavigatorURIs_getInstance
+  });
+  Object.defineProperty(package$navigator, 'navigator', {
+    get: function () {
+      return navigator;
+    }
+  });
   var package$page = package$sitetheme.page || (package$sitetheme.page = {});
   package$page.HeaderFooterPage = HeaderFooterPage;
   package$page.HomePage = HomePage;
@@ -3587,6 +3705,7 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   package$web.GraphQLQueryBody = GraphQLQueryBody;
   $$importsForInline$$['ktor-client-core'] = $module$ktor_client_core;
   Object.defineProperty(HeaderFooterPresenter.prototype, 'coroutineContext', Object.getOwnPropertyDescriptor(Presenter.prototype, 'coroutineContext'));
+  navigator = new NavigatorSource();
   categoryListItemFragment = lazy(categoryListItemFragment$lambda);
   revisionListItemFragment = lazy(revisionListItemFragment$lambda);
   tagListItemFragment = lazy(tagListItemFragment$lambda);

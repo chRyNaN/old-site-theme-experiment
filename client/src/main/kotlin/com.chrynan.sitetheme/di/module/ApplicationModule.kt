@@ -4,4 +4,5 @@ import com.chrynan.locator.Module
 
 interface ApplicationModule : Module,
     WebModule,
-    RepositoryModule
+    RepositoryModule,
+    NavigatorModule

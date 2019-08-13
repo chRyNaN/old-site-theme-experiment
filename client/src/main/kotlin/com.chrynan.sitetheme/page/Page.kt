@@ -9,6 +9,9 @@ abstract class Page {
     open fun onLayoutCreated() {
     }
 
+    open fun onDestroyLayout() {
+    }
+
     open fun onLayoutDestroyed() {
     }
 }
