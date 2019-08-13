@@ -1,3 +1,6 @@
 [submodule "graphql-query"]
 	path = graphql-query
 	url = git@github.com:chRyNaN/graphql-query-builder.git
+[submodule "locator"]
+	path = locator
+	url = git@github.com:chRyNaN/locator.git
