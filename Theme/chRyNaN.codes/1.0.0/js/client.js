@@ -29,8 +29,8 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   'use strict';
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
-  var Unit = Kotlin.kotlin.Unit;
   var PropertyMetadata = Kotlin.PropertyMetadata;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var LocatesWith = $module$locator.com.chrynan.locator.LocatesWith;
   var Locator_init = $module$locator.com.chrynan.locator.Locator;
@@ -46,6 +46,7 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   var Logger = $module$ktor_client_logging.io.ktor.client.features.logging.Logger;
   var get_DEFAULT = $module$ktor_client_logging.io.ktor.client.features.logging.get_DEFAULT_3z44iy$;
   var LogLevel = $module$ktor_client_logging.io.ktor.client.features.logging.LogLevel;
+  var Unit = Kotlin.kotlin.Unit;
   var HttpClient = $module$ktor_client_core.io.ktor.client.HttpClient_744i18$;
   var clear = Kotlin.kotlin.dom.clear_asww5s$;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
@@ -66,7 +67,6 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   var COROUTINE_SUSPENDED = Kotlin.kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED;
   var CoroutineImpl = Kotlin.kotlin.coroutines.CoroutineImpl;
   var launch = $module$kotlinx_coroutines_core.kotlinx.coroutines.launch_s496o7$;
-  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var SupervisorJob = $module$kotlinx_coroutines_core.kotlinx.coroutines.SupervisorJob_5dx9e$;
   var coroutines = $module$kotlinx_coroutines_core.kotlinx.coroutines;
   var CoroutineScope = $module$kotlinx_coroutines_core.kotlinx.coroutines.CoroutineScope;
@@ -192,21 +192,17 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
     simpleName: 'Application',
     interfaces: []
   };
-  function main$lambda(closure$application) {
-    return function (it) {
-      closure$application.onStart();
-      return Unit;
-    };
+  function main$lambda() {
+    return new HomePage();
   }
   function main_0() {
-    var application = new SiteApplication(new HomePage());
-    window.onload = main$lambda(application);
+    startAppOn(main$lambda);
   }
-  function SiteApplication(startingPage) {
-    if (startingPage === void 0)
-      startingPage = new HomePage();
-    this.startingPage_0 = startingPage;
-    this.module_utpevl$_0 = new ApplicationModuleSource();
+  function SiteApplication(startingPageRetriever) {
+    if (startingPageRetriever === void 0)
+      startingPageRetriever = SiteApplication_init$lambda;
+    this.startingPageRetriever_0 = startingPageRetriever;
+    this.module_utpevl$_0 = applicationModule;
     this.navigator_whzs0$_0 = new Locator_init(SiteApplication$navigator$lambda, this.module);
   }
   Object.defineProperty(SiteApplication.prototype, 'module', {
@@ -221,13 +217,26 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
     }
   });
   SiteApplication.prototype.onStart = function () {
-    var $this = locator.DependencyGraph;
+    println('SiteApplication: onStart: Before attach calls');
     var module_0 = this.module;
-    var $receiver_0 = $this.modules;
-    var key = getKClass(ApplicationModule);
-    $receiver_0.put_xwzc9p$(key, module_0);
-    this.navigator_0.goTo_inkody$(this.startingPage_0);
+    var $receiver = locator.DependencyGraph.modules;
+    var key = getKClass(WebModule);
+    $receiver.put_xwzc9p$(key, module_0);
+    var module_0_0 = this.module;
+    var $receiver_0 = locator.DependencyGraph.modules;
+    var key_0 = getKClass(RepositoryModule);
+    $receiver_0.put_xwzc9p$(key_0, module_0_0);
+    var $this = locator.DependencyGraph;
+    var module_0_1 = this.module;
+    var $receiver_0_0 = $this.modules;
+    var key_1 = getKClass(ApplicationModule);
+    $receiver_0_0.put_xwzc9p$(key_1, module_0_1);
+    println('SiteApplication: onStart: After attach calls');
+    this.navigator_0.goTo_inkody$(this.startingPageRetriever_0());
   };
+  function SiteApplication_init$lambda() {
+    return new HomePage();
+  }
   function SiteApplication$navigator$lambda($receiver) {
     return $receiver.navigator;
   }
@@ -271,6 +280,13 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
     simpleName: 'HomePageModule',
     interfaces: [Module]
   };
+  var webModule;
+  var repositoryModule;
+  var navigatorModule;
+  var applicationModule;
+  function homePageModule(page) {
+    return new HomePageModuleSource(page);
+  }
   function NavigatorModule() {
   }
   NavigatorModule.$metadata$ = {
@@ -292,10 +308,10 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
     simpleName: 'WebModule',
     interfaces: [Module]
   };
-  function ApplicationModuleSource() {
-    this.$delegate_o1fvkb$_0 = new WebModuleSource();
-    this.$delegate_o1fvkb$_1 = new RepositoryModuleSource();
-    this.$delegate_o1fvkb$_2 = new NavigatorModuleSource();
+  function ApplicationModuleSource(webModule, repositoryModule, navigatorModule) {
+    this.$delegate_o1fvkb$_0 = webModule;
+    this.$delegate_o1fvkb$_1 = repositoryModule;
+    this.$delegate_o1fvkb$_2 = navigatorModule;
   }
   Object.defineProperty(ApplicationModuleSource.prototype, 'httpClient', {
     get: function () {
@@ -376,18 +392,8 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
     simpleName: 'NavigatorModuleSource',
     interfaces: [NavigatorModule]
   };
-  function RepositoryModuleSource() {
-    var tmp$, tmp$_0, tmp$_1;
-    tmp$ = locator.DependencyGraph.modules.get_11rb$(getKClass(WebModule));
-    if (tmp$ == null) {
-      throw new ModuleNotInitializedException_init('Module not found for KClass = ' + getKClass(WebModule));
-    }
-    var module_0 = tmp$;
-    tmp$_1 = Kotlin.isType(tmp$_0 = module_0, WebModule) ? tmp$_0 : null;
-    if (tmp$_1 == null) {
-      throw new ModuleClassCastException_init(getKClass(WebModule));
-    }
-    this.$delegate_glff8z$_0 = tmp$_1;
+  function RepositoryModuleSource(webModule) {
+    this.$delegate_glff8z$_0 = webModule;
     this.postRepository_bd9iff$_0 = lazy(RepositoryModuleSource$postRepository$lambda(this));
   }
   Object.defineProperty(RepositoryModuleSource.prototype, 'postRepository', {
@@ -506,7 +512,16 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
     }
     return NavigatorURIs_instance;
   }
-  var navigator;
+  function startAppOn$lambda(closure$application) {
+    return function (it) {
+      closure$application.onStart();
+      return Unit;
+    };
+  }
+  function startAppOn(pageRetriever) {
+    var application = new SiteApplication(pageRetriever);
+    window.onload = startAppOn$lambda(application);
+  }
   function HeaderFooterPage() {
     Page.call(this);
     this.headerContainerId_rfyo91$_0 = 'headerContainer';
@@ -704,7 +719,7 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   };
   function HomePage$module$lambda(this$HomePage) {
     return function () {
-      return new HomePageModuleSource(this$HomePage);
+      return homePageModule(this$HomePage);
     };
   }
   function HomePage$presenter$lambda($receiver) {
@@ -3590,6 +3605,27 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   var package$module = package$di.module || (package$di.module = {});
   package$module.ApplicationModule = ApplicationModule;
   package$module.HomePageModule = HomePageModule;
+  Object.defineProperty(package$module, 'webModule', {
+    get: function () {
+      return webModule;
+    }
+  });
+  Object.defineProperty(package$module, 'repositoryModule', {
+    get: function () {
+      return repositoryModule;
+    }
+  });
+  Object.defineProperty(package$module, 'navigatorModule', {
+    get: function () {
+      return navigatorModule;
+    }
+  });
+  Object.defineProperty(package$module, 'applicationModule', {
+    get: function () {
+      return applicationModule;
+    }
+  });
+  package$module.homePageModule_2i7uyz$ = homePageModule;
   package$module.NavigatorModule = NavigatorModule;
   package$module.RepositoryModule = RepositoryModule;
   package$module.WebModule = WebModule;
@@ -3607,11 +3643,7 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   Object.defineProperty(package$navigator, 'NavigatorURIs', {
     get: NavigatorURIs_getInstance
   });
-  Object.defineProperty(package$navigator, 'navigator', {
-    get: function () {
-      return navigator;
-    }
-  });
+  package$navigator.startAppOn_q490zi$ = startAppOn;
   var package$page = package$sitetheme.page || (package$sitetheme.page = {});
   package$page.HeaderFooterPage = HeaderFooterPage;
   package$page.HomePage = HomePage;
@@ -3705,7 +3737,10 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   package$web.GraphQLQueryBody = GraphQLQueryBody;
   $$importsForInline$$['ktor-client-core'] = $module$ktor_client_core;
   Object.defineProperty(HeaderFooterPresenter.prototype, 'coroutineContext', Object.getOwnPropertyDescriptor(Presenter.prototype, 'coroutineContext'));
-  navigator = new NavigatorSource();
+  webModule = new WebModuleSource();
+  repositoryModule = new RepositoryModuleSource(webModule);
+  navigatorModule = new NavigatorModuleSource();
+  applicationModule = new ApplicationModuleSource(webModule, repositoryModule, navigatorModule);
   categoryListItemFragment = lazy(categoryListItemFragment$lambda);
   revisionListItemFragment = lazy(revisionListItemFragment$lambda);
   tagListItemFragment = lazy(tagListItemFragment$lambda);

@@ -6,7 +6,7 @@ import com.chrynan.locator.detachFromDependencyGraph
 import com.chrynan.locator.locate
 import com.chrynan.sitetheme.binder.HomeBinder
 import com.chrynan.sitetheme.di.module.HomePageModule
-import com.chrynan.sitetheme.di.module.source.HomePageModuleSource
+import com.chrynan.sitetheme.di.module.homePageModule
 import com.chrynan.sitetheme.templates.PostItemTemplate
 import com.chrynan.sitetheme.view.HomeView
 import com.chrynan.sitetheme.viewmodel.PostItemViewModel
@@ -20,7 +20,7 @@ class HomePage : HeaderFooterPage(),
     HomeBinder,
     LocatesWith<HomePageModule> {
 
-    override val module by lazy { HomePageModuleSource(this) }
+    override val module by lazy { homePageModule(page = this) }
 
     override val presenter by locate { presenter }
 

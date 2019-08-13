@@ -93,6 +93,22 @@ var locator = function (_, Kotlin) {
       locator.DependencyGraph.modules.remove_11rb$(getKClass(M_0));
     };
   }));
+  var attachToDependencyGraph_0 = defineInlineFunction('locator.com.chrynan.locator.attachToDependencyGraph_tzatgi$', wrapFunction(function () {
+    var locator = _.com.chrynan.locator;
+    var getKClass = Kotlin.getKClass;
+    return function (M_0, isM, module_0) {
+      var $receiver = locator.DependencyGraph.modules;
+      var key = getKClass(M_0);
+      $receiver.put_xwzc9p$(key, module_0);
+    };
+  }));
+  var detachFromDependencyGraph_0 = defineInlineFunction('locator.com.chrynan.locator.detachFromDependencyGraph_amyoeg$', wrapFunction(function () {
+    var locator = _.com.chrynan.locator;
+    var getKClass = Kotlin.getKClass;
+    return function (M_0, isM) {
+      locator.DependencyGraph.modules.remove_11rb$(getKClass(M_0));
+    };
+  }));
   var locate = defineInlineFunction('locator.com.chrynan.locator.locate_1tb6k4$', wrapFunction(function () {
     var Locator_init = _.com.chrynan.locator.Locator;
     return function (M_0, isM, $receiver, moduleAccessor) {

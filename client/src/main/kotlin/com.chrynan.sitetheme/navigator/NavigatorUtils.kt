@@ -1,4 +1,13 @@
 package com.chrynan.sitetheme.navigator
 
-// Global value, useful for non-single page applications
-val navigator: Navigator = NavigatorSource()
+import com.chrynan.sitetheme.SiteApplication
+import com.chrynan.sitetheme.page.Page
+import kotlin.browser.window
+
+fun startAppOn(pageRetriever: () -> Page) {
+    val application = SiteApplication(pageRetriever)
+
+    window.onload = {
+        application.onStart()
+    }
+}
