@@ -1,31 +1,4 @@
-if (typeof kotlin === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'kotlin' was not found. Please, check whether 'kotlin' is loaded prior to 'client'.");
-}
-if (typeof locator === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'locator' was not found. Please, check whether 'locator' is loaded prior to 'client'.");
-}
-if (typeof this['ktor-client-core'] === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-core' was not found. Please, check whether 'ktor-client-core' is loaded prior to 'client'.");
-}
-if (typeof this['ktor-client-json'] === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-json' was not found. Please, check whether 'ktor-client-json' is loaded prior to 'client'.");
-}
-if (typeof this['ktor-client-logging'] === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'ktor-client-logging' was not found. Please, check whether 'ktor-client-logging' is loaded prior to 'client'.");
-}
-if (typeof this['kotlinx-html-js'] === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'kotlinx-html-js' was not found. Please, check whether 'kotlinx-html-js' is loaded prior to 'client'.");
-}
-if (typeof this['kotlinx-coroutines-core'] === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'kotlinx-coroutines-core' was not found. Please, check whether 'kotlinx-coroutines-core' is loaded prior to 'client'.");
-}
-if (typeof this['graphql-query'] === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'graphql-query' was not found. Please, check whether 'graphql-query' is loaded prior to 'client'.");
-}
-if (typeof common === 'undefined') {
-  throw new Error("Error loading module 'client'. Its dependency 'common' was not found. Please, check whether 'common' is loaded prior to 'client'.");
-}
-var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $module$ktor_client_json, $module$ktor_client_logging, $module$kotlinx_html_js, $module$kotlinx_coroutines_core, $module$graphql_query, $module$common) {
+(function (_, Kotlin, $module$locator, $module$ktor_client_core, $module$ktor_client_json, $module$ktor_client_logging, $module$kotlinx_html_js, $module$kotlinx_coroutines_core, $module$graphql_query, $module$common) {
   'use strict';
   var $$importsForInline$$ = _.$$importsForInline$$ || (_.$$importsForInline$$ = {});
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
@@ -3751,4 +3724,6 @@ var client = function (_, Kotlin, $module$locator, $module$ktor_client_core, $mo
   main_0();
   Kotlin.defineModule('client', _);
   return _;
-}(typeof client === 'undefined' ? {} : client, kotlin, locator, this['ktor-client-core'], this['ktor-client-json'], this['ktor-client-logging'], this['kotlinx-html-js'], this['kotlinx-coroutines-core'], this['graphql-query'], common);
+}(module.exports, require('kotlin'), require('locator'), require('ktor-client-core'), require('ktor-client-json'), require('ktor-client-logging'), require('kotlinx-html-js'), require('kotlinx-coroutines-core'), require('graphql-query'), require('common')));
+
+//# sourceMappingURL=client.js.map
